@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>IRON LEGACY — أرنولد سبليت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;700;900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --gold:#ffd700;--gold-dim:#e9c400;--charcoal:#121414;
+  --surface:#1e2020;--surface-low:#1a1c1c;--surface-high:#282a2b;
+  --outline:#2A2A2A;--outline-gold:#4d4732;
+  --text:#e2e2e2;--text-muted:#d0c6ab;--text-dim:#999077;
+}
+html,body{background:var(--charcoal);color:var(--text);font-family:'Noto Sans Arabic','Inter',sans-serif;overflow-x:hidden;min-height:100vh}
+body{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+.ms{font-family:'Material Symbols Outlined';font-style:normal;font-weight:normal;font-size:22px;line-height:1;display:inline-block;direction:ltr;-webkit-font-smoothing:antialiased;vertical-align:middle}
+
+/* ── HEADER ── */
+#header{position:fixed;top:0;width:100%;z-index:100;background:var(--charcoal);border-bottom:2px solid var(--outline-gold);display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:56px}
+@media(min-width:768px){#header{padding:0 64px;height:68px}}
+.logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;color:var(--gold);letter-spacing:-1px;cursor:pointer;border:none;background:none;text-decoration:none}
+@media(min-width:768px){.logo{font-size:26px}}
+.desk-nav{display:none;gap:24px;align-items:center}
+@media(min-width:768px){.desk-nav{display:flex}}
+.desk-nav button{font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);background:none;border:none;border-bottom:2px solid transparent;padding-bottom:4px;cursor:pointer;transition:.2s}
+.desk-nav button.active{color:var(--gold);border-bottom-color:var(--gold)}
+.btn-start{background:var(--gold);color:#3a3000;padding:8px 18px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;border:none;cursor:pointer;transition:.15s}
+.btn-start:active{transform:translateY(2px)}
+
+/* ── BOTTOM NAV ── */
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(12,15,15,.95);backdrop-filter:blur(16px);border-top:1px solid var(--outline-gold);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+@media(min-width:768px){#bottom-nav{display:none}}
+#bottom-nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 0;background:none;border:none;color:var(--text-muted);font-family:'Montserrat',sans-serif;font-weight:600;font-size:9px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;transition:.15s}
+#bottom-nav button.active{color:var(--gold)}
+#bottom-nav button.active .ms{color:var(--gold)}
+#bottom-nav .ms{color:var(--text-muted);font-size:22px;transition:.15s}
+
+/* ── MAIN ── */
+#app{padding-top:56px}
+@media(min-width:768px){#app{padding-top:68px}}
+.page{display:none}
+.page.active{display:block}
+
+/* ── GOLD UTILS ── */
+.gold{color:var(--gold)}
+.gold-txt{background:linear-gradient(135deg,#ffd700 0%,#b8860b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gold-left{border-right:4px solid var(--gold);padding-right:12px}
+.tag-gold{background:var(--gold);color:#3a3000;font-family:'Montserrat',sans-serif;font-weight:800;font-size:9px;text-transform:uppercase;letter-spacing:.08em;padding:3px 7px;display:inline-block}
+.iron-border{border:1px solid var(--outline)}
+
+/* ── TRAINING PAGE ── */
+.hero{position:relative;min-height:580px;display:flex;align-items:center;overflow:hidden}
+@media(min-width:768px){.hero{min-height:860px}}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#121414 0%,rgba(18,20,20,.7) 50%,transparent 100%)}
+@media(min-width:768px){.hero-bg::after{background:linear-gradient(to left,#121414 0%,rgba(18,20,20,.7) 50%,transparent 100%)}}
+.hero-content{position:relative;z-index:1;padding:40px 20px 60px;max-width:700px}
+@media(min-width:768px){.hero-content{padding:0 64px}}
+.hero h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:38px;line-height:1.05;margin-bottom:16px}
+@media(min-width:768px){.hero h1{font-size:76px}}
+.hero p{color:var(--text-muted);margin-bottom:28px;max-width:520px;line-height:1.7;font-size:14px}
+@media(min-width:768px){.hero p{font-size:17px}}
+.btn-row{display:flex;flex-direction:column;gap:10px}
+@media(min-width:640px){.btn-row{flex-direction:row}}
+.btn-primary{background:var(--gold);color:#3a3000;padding:16px 28px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+.btn-primary:active{transform:translateY(2px)}
+.btn-outline{border:2px solid rgba(226,226,226,.55);color:var(--text);padding:16px 28px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em;background:none;cursor:pointer;transition:.2s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+.stats-bar{background:#1a1c1c;border-top:1px solid var(--outline-gold);border-bottom:1px solid var(--outline-gold);display:grid;grid-template-columns:repeat(3,1fr);divide-x:var(--outline-gold)}
+.stat-item{text-align:center;padding:18px 8px;border-left:1px solid var(--outline-gold)}
+.stat-item:last-child{border-left:none}
+.stat-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:26px;color:var(--gold)}
+@media(min-width:768px){.stat-val{font-size:38px}}
+.stat-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);margin-top:4px}
+
+.section{padding:48px 20px}
+@media(min-width:768px){.section{padding:72px 64px}}
+.section-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;margin-bottom:8px}
+@media(min-width:768px){.section-title{font-size:36px}}
+.divider-gold{width:72px;height:4px;background:var(--gold);margin:12px 0 28px}
+
+.philosophy-grid{display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
+@media(min-width:1024px){.philosophy-grid{grid-template-columns:1fr 1fr}}
+.philosophy-img{position:relative}
+.philosophy-img::before{content:'';position:absolute;top:-12px;right:-12px;width:80px;height:80px;border-top:4px solid var(--gold);border-right:4px solid var(--gold);z-index:1}
+@media(min-width:768px){.philosophy-img::before{width:112px;height:112px}}
+.philosophy-img img{width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid var(--outline);position:relative;z-index:0}
+@media(min-width:1024px){.philosophy-img img{aspect-ratio:4/5}}
+.philosophy-list{list-style:none;display:flex;flex-direction:column;gap:18px;margin-top:16px}
+.philosophy-list li{display:flex;flex-direction:column;gap:4px;border-right:4px solid var(--gold);padding-right:14px}
+.philosophy-list li strong{color:var(--text);font-size:15px}
+.philosophy-list li span{color:var(--text-muted);font-size:13px;line-height:1.6}
+
+.why-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:768px){.why-grid{grid-template-columns:repeat(3,1fr)}}
+.why-card{background:var(--surface);border:1px solid var(--outline);padding:22px;transition:.2s}
+.why-card:hover{border-color:var(--gold)}
+.why-card .ms{font-size:36px;color:var(--gold);margin-bottom:10px;display:block}
+.why-card h3{font-family:'Montserrat',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;margin-bottom:8px}
+.why-card p{color:var(--text-muted);font-size:12px;line-height:1.7}
+.why-card.wide{grid-column:1/-1}
+@media(min-width:768px){.why-card.wide{grid-column:span 2}}
+
+.cta-section{padding:48px 20px;text-align:center;background:rgba(255,215,0,.04)}
+@media(min-width:768px){.cta-section{padding:80px 64px}}
+.cta-section h2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:24px;margin-bottom:16px}
+@media(min-width:768px){.cta-section h2{font-size:52px}}
+.cta-section p{color:var(--text-muted);margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto;font-size:13px}
+.btn-cta-wrap{display:inline-block;padding:4px;background:var(--gold)}
+.btn-cta{display:block;background:var(--charcoal);color:var(--gold);padding:18px 40px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em;border:none;cursor:pointer;transition:.2s}
+@media(min-width:768px){.btn-cta{font-size:24px;padding:22px 60px}}
+.btn-cta:hover{background:var(--gold);color:#3a3000}
+
+/* ── SCHEDULE PAGE ── */
+.sched-header{padding:20px 16px 16px;border-bottom:1px solid rgba(77,71,50,.4)}
+@media(min-width:768px){.sched-header{padding:28px 64px 20px}}
+.sched-top{display:flex;flex-direction:column;gap:12px;margin-bottom:0}
+@media(min-width:640px){.sched-top{flex-direction:row;align-items:center;justify-content:space-between}}
+.sched-date-str{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase}
+@media(min-width:768px){.sched-date-str{font-size:30px}}
+.sched-date-sub{color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:.15em;margin-top:4px}
+.sched-time-wrap{display:flex;align-items:center;gap:16px}
+.sched-time{font-family:'Montserrat',sans-serif;font-weight:900;font-size:28px;color:var(--gold);letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+@media(min-width:768px){.sched-time{font-size:36px}}
+.sched-time-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-top:2px;text-align:left}
+.pipe{width:1px;height:36px;background:rgba(77,71,50,.6)}
+.sched-week-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:28px;color:var(--text-muted);text-align:left}
+@media(min-width:768px){.sched-week-num{font-size:36px}}
+
+.today-hero{position:relative;overflow:hidden;border:2px solid var(--gold);margin:16px}
+@media(min-width:768px){.today-hero{margin:20px 64px}}
+.today-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18}
+.today-hero-grad{position:absolute;inset:0;background:linear-gradient(to left,rgba(18,20,20,.9) 0%,rgba(18,20,20,.55) 100%)}
+.today-hero-body{position:relative;padding:20px}
+@media(min-width:768px){.today-hero-body{padding:32px}}
+.today-tags{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.today-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;margin-bottom:6px}
+@media(min-width:768px){.today-title{font-size:36px}}
+.today-sub{color:var(--text-muted);font-size:12px;margin-bottom:16px}
+.today-stats{display:flex;gap:20px;margin-bottom:20px}
+.today-stat{display:flex;align-items:center;gap:10px}
+.today-stat-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:28px;color:var(--gold);line-height:1}
+.today-stat-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-top:4px}
+.btn-view{background:var(--gold);color:#3a3000;padding:10px 20px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border:none;cursor:pointer;transition:.15s}
+.btn-view:active{transform:translateY(2px)}
+
+.rest-box{border:1px dashed var(--outline-gold);padding:32px;text-align:center;margin:16px}
+@media(min-width:768px){.rest-box{margin:20px 64px}}
+.rest-box .ms{font-size:48px;color:var(--gold);margin-bottom:12px;display:block}
+.rest-box h2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;margin-bottom:8px}
+.rest-box p{color:var(--text-muted);font-size:12px;max-width:380px;margin:0 auto}
+
+.quick-list-wrap{padding:0 16px 24px}
+@media(min-width:768px){.quick-list-wrap{padding:0 64px 28px}}
+.section-label{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.section-label .bar{width:4px;height:20px;background:var(--gold)}
+.section-label span{font-family:'Montserrat',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.quick-list{display:flex;flex-direction:column;gap:4px}
+.quick-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--surface);border:1px solid var(--outline)}
+.quick-item img{width:40px;height:40px;object-fit:cover;flex-shrink:0}
+.quick-item-name{font-size:11px;font-weight:700;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.quick-item-sets{font-size:9px;color:var(--gold);margin-top:2px}
+.view-all-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.link-gold{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;font-weight:700;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px}
+
+.week-grid-wrap{padding:0 16px 24px}
+@media(min-width:768px){.week-grid-wrap{padding:0 64px 28px}}
+.week-grid{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+@media(min-width:768px){.week-grid{display:grid;grid-template-columns:repeat(7,1fr);overflow:visible;padding-bottom:0}}
+.week-card{flex:0 0 150px;background:var(--surface);border:1px solid var(--outline-gold);padding:14px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+@media(min-width:768px){.week-card{flex:unset}}
+.week-card.today-card{border-color:var(--gold)}
+.week-card.selected-card{border-color:var(--gold);background:rgba(255,215,0,.05)}
+.week-card::before{content:'';position:absolute;top:0;left:0;right:0;height:0;background:var(--gold);transition:.2s}
+.week-card.today-card::before,.week-card.selected-card::before{height:2px}
+.week-day-name{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted)}
+.week-today-badge{font-size:8px;font-weight:900;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+.week-title{font-size:11px;font-weight:900;text-transform:uppercase;color:var(--text);margin:8px 0 4px;line-height:1.3}
+.week-meta{font-size:9px;color:var(--text-dim);text-transform:uppercase}
+
+/* ── EXERCISES PAGE ── */
+.ex-day-tabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--outline);position:sticky;top:56px;z-index:50;background:var(--charcoal);scrollbar-width:none}
+@media(min-width:768px){.ex-day-tabs{top:68px}}
+.ex-day-tabs::-webkit-scrollbar{display:none}
+.ex-tab{flex:0 0 auto;min-width:80px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 16px 12px;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;transition:.2s;text-align:center}
+.ex-tab.active{border-bottom-color:var(--gold);background:rgba(255,215,0,.05)}
+.ex-tab .tab-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:8px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim)}
+.ex-tab.active .tab-num{color:var(--gold)}
+.ex-tab .tab-name{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);line-height:1.3}
+.ex-tab.active .tab-name{color:#fff}
+.ex-tab .tab-day{font-size:8px;color:var(--outline-gold)}
+.ex-tab.active .tab-day{color:var(--text-dim)}
+
+.ex-day-header{padding:18px 16px 12px;border-bottom:1px solid var(--outline);background:var(--surface-low)}
+@media(min-width:768px){.ex-day-header{padding:20px 64px 14px}}
+.ex-day-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.ex-day-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;margin-bottom:10px}
+@media(min-width:768px){.ex-day-title{font-size:28px}}
+.ex-day-note{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);margin-bottom:10px}
+.ex-day-note .ms{font-size:14px;color:var(--gold)}
+.ex-day-note span{font-size:11px;color:var(--text-muted)}
+.ex-counters{display:flex;border-top:1px solid var(--outline);margin-top:6px}
+.ex-counter{flex:1;text-align:center;padding:10px 4px;border-left:1px solid var(--outline)}
+.ex-counter:last-child{border-left:none}
+.ex-counter-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:18px;color:var(--gold)}
+.ex-counter-lbl{font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-top:4px}
+
+.ex-groups{padding:14px 16px 32px;display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:1024px){.ex-groups{grid-template-columns:1fr 1fr;padding:14px 64px 40px}}
+
+.muscle-card{background:var(--surface);border:1px solid var(--outline);overflow:hidden}
+.muscle-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface-high);border-bottom:1px solid var(--outline);position:relative}
+.muscle-hdr::before{content:'';position:absolute;right:0;top:0;bottom:0;width:4px;background:var(--gold)}
+.muscle-icon-box{width:34px;height:34px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.muscle-icon-box .ms{font-size:16px;color:var(--gold)}
+.muscle-name-ar{font-size:14px;font-weight:900;color:#fff}
+.muscle-name-en{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);font-family:'Montserrat',sans-serif;margin-top:2px}
+.muscle-count{margin-right:auto;background:var(--gold);color:#3a3000;font-family:'Montserrat',sans-serif;font-weight:900;font-size:9px;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;flex-shrink:0}
+
+.ex-card{border-bottom:1px solid var(--outline);background:var(--surface-low);border-right:2px solid var(--outline)}
+.ex-card.featured{border-right-color:var(--gold)}
+.ex-card:last-child{border-bottom:none}
+.ex-card-top{display:flex;align-items:flex-start;gap:10px;padding:10px 12px 6px}
+.ex-card-img{width:64px;height:64px;object-fit:cover;border:1px solid var(--outline);flex-shrink:0}
+@media(min-width:768px){.ex-card-img{width:76px;height:76px}}
+.ex-card-info{flex:1;min-width:0;padding-top:4px}
+.ex-card-name{font-family:'Montserrat',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#fff;line-height:1.3}
+.ex-card-sets{font-size:10px;font-weight:700;color:var(--gold);margin-top:5px;letter-spacing:.02em;font-family:'Montserrat',sans-serif}
+.ex-tips{margin:0 12px 6px;padding:8px 10px;background:rgba(255,255,255,.02);border-right:2px solid var(--outline)}
+.ex-tips-lbl{font-size:7px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:#555;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.ex-tip-row{display:flex;align-items:flex-start;gap:7px;margin-bottom:4px}
+.ex-tip-dot{width:5px;height:5px;background:var(--gold);flex-shrink:0;margin-top:5px}
+.ex-tip-txt{font-size:10px;color:var(--text-dim);line-height:1.6}
+.ex-alt{display:flex;align-items:center;gap:6px;margin:0 12px 10px;padding:5px 8px;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.22)}
+.ex-alt .ms{font-size:12px;color:var(--text-dim)}
+.ex-alt-lbl{font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);white-space:nowrap}
+.ex-alt-val{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text)}
+
+/* ── NUTRITION PAGE ── */
+.nutr-page{background:var(--charcoal)}
+
+/* Hero strip */
+.nutr-hero{background:linear-gradient(135deg,#1a1600 0%,#121414 100%);border-bottom:3px solid var(--gold);padding:28px 16px 24px}
+@media(min-width:768px){.nutr-hero{padding:40px 64px 36px}}
+.nutr-hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#3a3000;padding:4px 10px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:9px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+.nutr-hero h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:28px;color:var(--gold);text-transform:uppercase;line-height:1.1;margin-bottom:12px}
+@media(min-width:768px){.nutr-hero h1{font-size:48px}}
+.nutr-hero p{color:var(--text-muted);font-size:13px;max-width:560px;line-height:1.75}
+
+/* Section blocks */
+.nutr-block{border-bottom:1px solid var(--outline)}
+.nutr-block-hdr{display:flex;align-items:center;gap:10px;padding:16px 16px 14px;border-bottom:1px solid var(--outline);background:var(--surface-high)}
+@media(min-width:768px){.nutr-block-hdr{padding:18px 64px 16px}}
+.nutr-block-hdr .ms{font-size:20px;color:var(--gold)}
+.nutr-block-hdr h2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#fff;margin:0}
+.nutr-block-hdr span.sub{font-size:10px;color:var(--text-dim);margin-right:auto}
+.nutr-block-body{padding:16px}
+@media(min-width:768px){.nutr-block-body{padding:24px 64px}}
+
+/* Golden rule row */
+.nutr-rule{display:flex;flex-direction:column;gap:12px}
+@media(min-width:768px){.nutr-rule{flex-direction:row;align-items:stretch;gap:16px}}
+.nutr-rule-main{flex:1;background:var(--surface);border:1px solid var(--outline-gold);border-right:4px solid var(--gold);padding:18px}
+.nutr-rule-main h3{font-family:'Montserrat',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:#fff;margin-bottom:8px}
+.nutr-rule-main p{font-size:12px;color:var(--text-muted);line-height:1.75;margin-bottom:12px}
+.nutr-rule-tags{display:flex;flex-wrap:wrap;gap:6px}
+.nutr-rule-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border:1px solid rgba(255,215,0,.4);color:var(--gold)}
+.nutr-rule-side{display:flex;flex-direction:row;gap:10px}
+@media(min-width:768px){.nutr-rule-side{flex-direction:column;min-width:180px}}
+.nutr-stat-box{flex:1;background:var(--surface);border:1px solid var(--outline-gold);padding:14px;text-align:center}
+.nutr-stat-box .lbl{font-size:8px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);margin-bottom:6px}
+.nutr-stat-box .val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;color:var(--gold);line-height:1}
+.nutr-stat-box .unit{font-size:9px;color:var(--text-muted);margin-top:4px}
+
+/* Macros */
+.macros-grid{display:flex;flex-direction:column;gap:10px}
+@media(min-width:640px){.macros-grid{flex-direction:row;gap:10px}}
+.macro-card{flex:1;background:var(--surface);border:1px solid var(--outline);display:flex;flex-direction:row;gap:0;overflow:hidden}
+@media(min-width:640px){.macro-card{flex-direction:column}}
+.macro-accent{width:5px;flex-shrink:0}
+@media(min-width:640px){.macro-accent{width:auto;height:4px}}
+.macro-body{padding:14px 14px 14px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
+@media(min-width:640px){.macro-body{padding:16px}}
+.macro-icon{font-size:24px;display:block;margin-bottom:4px}
+.macro-name{font-family:'Montserrat',sans-serif;font-weight:900;font-size:13px;color:#fff}
+.macro-en{font-size:8px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin-bottom:8px}
+.macro-amount{font-family:'Montserrat',sans-serif;font-weight:900;font-size:24px;line-height:1}
+.macro-unit{font-size:9px;color:var(--text-dim);margin-bottom:10px}
+.macro-desc{font-size:11px;color:var(--text-muted);line-height:1.65}
+
+/* Timing */
+.timing-grid{display:flex;flex-direction:column;gap:10px}
+@media(min-width:768px){.timing-grid{flex-direction:row;gap:10px}}
+.timing-card{flex:1;background:var(--surface);border:1px solid var(--outline);overflow:hidden}
+.timing-card-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--outline)}
+.timing-card-hdr .ms{font-size:18px}
+.timing-card-hdr h3{font-size:12px;font-weight:900;color:#fff;margin:0;line-height:1.3}
+.timing-card-body{padding:12px 14px}
+.timing-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+.timing-item:last-child{margin-bottom:0}
+.timing-dot{width:5px;height:5px;background:var(--gold);flex-shrink:0;margin-top:5px}
+.timing-item span{font-size:11px;color:var(--text-muted);line-height:1.6}
+
+/* Supplements */
+.supp-table{display:flex;flex-direction:column;gap:0;border:1px solid var(--outline);overflow:hidden}
+.supp-row{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--outline);background:var(--surface-low)}
+.supp-row:last-child{border-bottom:none}
+.supp-row:nth-child(odd){background:var(--surface)}
+.supp-accent{width:5px;min-height:100%;flex-shrink:0;align-self:stretch}
+.supp-info{flex:1;padding:12px 12px 12px 10px;min-width:0}
+.supp-name-ar{font-size:13px;font-weight:900;color:#fff;line-height:1.3}
+.supp-name-en{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);margin-top:2px}
+.supp-right{padding:10px 14px;text-align:left;flex-shrink:0}
+.supp-dose{font-family:'Montserrat',sans-serif;font-weight:900;font-size:13px}
+.supp-timing{font-size:9px;color:var(--text-dim);margin-top:3px}
+.supp-badge{padding:10px 12px;flex-shrink:0;display:flex;align-items:center}
+.supp-badge span{font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:4px 7px;border:1px solid;white-space:nowrap}
+
+/* Recovery */
+.recover-grid{display:flex;flex-direction:column;gap:10px}
+@media(min-width:768px){.recover-grid{flex-direction:row;gap:10px}}
+.recover-card{flex:1;background:var(--surface);border:1px solid var(--outline);border-top:3px solid var(--gold);padding:16px}
+.recover-card .ms{font-size:28px;color:var(--gold);display:block;margin-bottom:10px}
+.recover-card h3{font-family:'Montserrat',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#fff;margin-bottom:4px}
+.recover-card .amount{font-size:20px;font-weight:900;color:var(--gold);font-family:'Montserrat',sans-serif;margin-bottom:8px}
+.recover-card p{font-size:11px;color:var(--text-muted);line-height:1.65}
+
+/* Footer banner */
+.nutr-footer{background:rgba(255,215,0,.04);border-top:2px solid rgba(255,215,0,.25);padding:20px 16px}
+@media(min-width:768px){.nutr-footer{padding:24px 64px;display:flex;align-items:center;justify-content:space-between;gap:24px}}
+.nutr-footer p{font-size:12px;color:var(--text-muted);line-height:1.8;max-width:600px}
+.nutr-footer-badge{font-family:'Montserrat',sans-serif;font-weight:900;font-size:14px;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;margin-top:12px;display:flex;align-items:center;gap:8px}
+@media(min-width:768px){.nutr-footer-badge{margin-top:0}}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--charcoal)}
+::-webkit-scrollbar-thumb{background:var(--surface-high);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<header id="header">
+  <button class="logo" onclick="nav('training')">IRON LEGACY</button>
+  <nav class="desk-nav" id="desk-nav">
+    <button onclick="nav('training')" id="dn-training">الرئيسية</button>
+    <button onclick="nav('schedule')" id="dn-schedule">الجدول</button>
+    <button onclick="nav('exercises')" id="dn-exercises">التمارين</button>
+    <button onclick="nav('nutrition')" id="dn-nutrition">التغذية</button>
+  </nav>
+  <button class="btn-start" onclick="nav('schedule')">ابدأ</button>
+</header>
+
+<!-- ═══════════════════════════════ PAGES ════════════════════════════════ -->
+<main id="app">
+
+<!-- ─────────────── TRAINING ─────────────── -->
+<section class="page active" id="page-training">
+  <div class="hero">
+    <div class="hero-bg">
+      <img src="https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="hero" loading="eager"/>
+    </div>
+    <div class="hero-content">
+      <h1>أرنولد سبليت:<br/><span class="gold-txt">إرث الأساطير</span></h1>
+      <p>اختبر البرنامج التدريبي الذي بنى أعظم الأجسام في التاريخ. نظام الـ 6 أيام عالي الكثافة المصمم لتفجير العضلات وتحقيق التناسق المثالي.</p>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="nav('schedule')">ابدأ تمرينك الآن <span class="ms">fitness_center</span></button>
+        <button class="btn-outline" onclick="nav('schedule')">اكتشف الجدول</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val">6</div><div class="stat-lbl">أيام تدريب</div></div>
+    <div class="stat-item"><div class="stat-val">2×</div><div class="stat-lbl">كل عضلة أسبوعياً</div></div>
+    <div class="stat-item"><div class="stat-val">90+</div><div class="stat-lbl">دقيقة كثافة</div></div>
+  </div>
+
+  <div class="section" style="background:#121414">
+    <div class="philosophy-grid">
+      <div class="philosophy-img" style="order:2">
+        <img src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=900" alt="chest"/>
+      </div>
+      <div style="order:1">
+        <h2 class="section-title gold">فلسفة الأرنولد سبليت</h2>
+        <div class="divider-gold"></div>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.8;margin-bottom:16px">يعتمد هذا النظام على مبدأ <strong style="color:var(--gold)">المجموعات العضلية المتضادة</strong>. بدلاً من تدريب عضلة واحدة، نقوم بدمج الصدر مع الظهر، والأكتاف مع الأذرع.</p>
+        <ul class="philosophy-list">
+          <li><strong>ضخ دم هائل (PUMP)</strong><span>تبادل التمارين بين عضلات الصدر والظهر يؤدي لتدفق الدم المستمر في الجزء العلوي بالكامل.</span></li>
+          <li><strong>تعافي أسرع</strong><span>يتيح هذا التقسيم وقتاً كافياً لكل مجموعة عضلية للنمو مع الحفاظ على وتيرة عالية.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background:#0c0f0f">
+    <div style="text-align:center;margin-bottom:40px">
+      <h2 class="section-title" style="color:var(--text)">لماذا تختار "إرث الحديد"؟</h2>
+      <div class="divider-gold" style="margin:12px auto 0"></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card wide">
+        <span class="ms">update</span>
+        <h3>تكرار العضلات 2x</h3>
+        <p>على عكس جداول الـ Bro-Split، هنا تمرن كل عضلة مرتين أسبوعياً. هذا هو المفتاح الذهبي لتحفيز تخليق البروتين العضلي بشكل مستمر.</p>
+      </div>
+      <div class="why-card">
+        <span class="ms">military_tech</span>
+        <h3>إلهام العصر الذهبي</h3>
+        <p>عدنا إلى الجذور. التمارين التي صمدت أمام اختبار الزمن، تم تحديثها بالعلم الرياضي المعاصر.</p>
+        <div style="margin-top:14px;padding:10px;background:#121414;border:1px solid rgba(255,215,0,.18);text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;color:var(--gold);letter-spacing:.1em">PURE PERFORMANCE</div>
+      </div>
+      <div class="why-card">
+        <span class="ms">bolt</span>
+        <h3>تركيز الضخامة</h3>
+        <p>كل تمرين مُختار بعناية لأقصى تحفيز للألياف العضلية مع الحفاظ على الأمان والشكل الصحيح.</p>
+      </div>
+      <div class="why-card">
+        <span class="ms">groups</span>
+        <h3>برنامجك الشخصي</h3>
+        <p>مبني لك ولصحابك — تتبعوا التقدم سوا وحققوا الأهداف بكفاءة.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>هل أنت مستعد لمواجهة الحديد؟</h2>
+    <p>لا توجد طرق مختصرة. فقط الجهد، الانضباط، والبرنامج الصحيح.</p>
+    <div class="btn-cta-wrap"><button class="btn-cta" onclick="nav('schedule')">احصل على البرنامج الآن</button></div>
+  </div>
+</section>
+
+<!-- ─────────────── SCHEDULE ─────────────── -->
+<section class="page" id="page-schedule">
+  <div class="sched-header">
+    <div class="sched-top">
+      <div>
+        <div class="sched-date-str" id="s-date">---</div>
+        <div class="sched-date-sub">الجدول الأسبوعي</div>
+      </div>
+      <div class="sched-time-wrap">
+        <div>
+          <div class="sched-time" id="s-time">00:00:00</div>
+          <div class="sched-time-lbl">الوقت الآن</div>
+        </div>
+        <div class="pipe"></div>
+        <div>
+          <div class="sched-week-num" id="s-week">—</div>
+          <div class="sched-time-lbl">الأسبوع</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="s-today-block"></div>
+  <div id="s-quicklist-block"></div>
+  <div class="week-grid-wrap">
+    <div class="section-label" style="margin-bottom:10px"><div class="bar"></div><span>الجدول الأسبوعي</span></div>
+    <div class="week-grid" id="s-week-grid"></div>
+  </div>
+</section>
+
+<!-- ─────────────── EXERCISES ─────────────── -->
+<section class="page" id="page-exercises">
+  <div class="ex-day-tabs" id="ex-tabs"></div>
+  <div id="ex-day-content"></div>
+</section>
+
+<!-- ─────────────── NUTRITION ─────────────── -->
+<section class="page" id="page-nutrition">
+<div class="nutr-page">
+
+  <!-- Hero -->
+  <div class="nutr-hero">
+    <div class="nutr-hero-badge"><span class="ms" style="font-size:14px">star</span>دليل التغذية والأداء</div>
+    <h1>نصائح الأداء<br/>والتغذية</h1>
+    <p>هذا الدليل مخصص للاعبين الذين تجاوزوا مرحلة البداية ويسعون للانتقال إلى مستوى النخبة.</p>
+  </div>
+
+  <!-- ① القاعدة الذهبية -->
+  <div class="nutr-block">
+    <div class="nutr-block-hdr">
+      <span class="ms">star</span>
+      <h2>القاعدة الذهبية — Caloric Surplus</h2>
+    </div>
+    <div class="nutr-block-body">
+      <div class="nutr-rule">
+        <div class="nutr-rule-main">
+          <h3>الفائض السعراتي المحسوب</h3>
+          <p>لبناء العضلات تحتاج فائضاً سعراتياً بسيطاً. فائض <strong style="color:var(--gold)">+250 إلى +500 سعرة يومياً</strong> يكفي لبناء 0.5 كجم عضلات أسبوعياً بدون دهون زائدة. لا تبالغ في الأكل — كمية الطعام لا تبني العضلات، البروتين هو من يبني.</p>
+          <div class="nutr-rule-tags">
+            <span class="nutr-rule-tag">TDEE</span>
+            <span class="nutr-rule-tag">+250 ~ 500 سعرة</span>
+            <span class="nutr-rule-tag">0.5 كجم/أسبوع</span>
+            <span class="nutr-rule-tag">Lean Bulk</span>
+          </div>
+        </div>
+        <div class="nutr-rule-side">
+          <div class="nutr-stat-box">
+            <div class="lbl">الفائض اليومي</div>
+            <div class="val">+300</div>
+            <div class="unit">سعرة حرارية</div>
+          </div>
+          <div class="nutr-stat-box">
+            <div class="lbl">نافذة ما بعد التمرين</div>
+            <div class="val">60</div>
+            <div class="unit">دقيقة ذهبية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② الماكروز الثلاثة -->
+  <div class="nutr-block">
+    <div class="nutr-block-hdr">
+      <span class="ms">pie_chart</span>
+      <h2>الماكروز الثلاثة</h2>
+      <span class="sub">لكل كيلو من وزن الجسم</span>
+    </div>
+    <div class="nutr-block-body">
+      <div class="macros-grid">
+        <!-- Protein -->
+        <div class="macro-card">
+          <div class="macro-accent" style="background:#ffd700"></div>
+          <div class="macro-body">
+            <span class="ms macro-icon" style="color:#ffd700">egg_alt</span>
+            <div class="macro-name" style="color:#ffd700">البروتين</div>
+            <div class="macro-en">Protein</div>
+            <div class="macro-amount" style="color:#ffd700">2.2<span style="font-size:14px">g</span></div>
+            <div class="macro-unit">لكل كجم وزن جسم</div>
+            <div class="macro-desc">المصدر الرئيسي لبناء العضلات. اجعل كل وجبة تحتوي على مصدر بروتين — بيض، دجاج، لحوم، سمك، جبن قريش.</div>
+          </div>
+        </div>
+        <!-- Carbs -->
+        <div class="macro-card">
+          <div class="macro-accent" style="background:#e9c400"></div>
+          <div class="macro-body">
+            <span class="ms macro-icon" style="color:#e9c400">grain</span>
+            <div class="macro-name" style="color:#e9c400">الكربوهيدرات</div>
+            <div class="macro-en">Carbohydrates</div>
+            <div class="macro-amount" style="color:#e9c400">4–6<span style="font-size:14px">g</span></div>
+            <div class="macro-unit">لكل كجم وزن جسم</div>
+            <div class="macro-desc">وقود التدريب. ركز على المصادر المعقدة: الأرز البني، الشوفان، البطاطا الحلوة. الكميات الكبيرة قبل التمرين فقط.</div>
+          </div>
+        </div>
+        <!-- Fats -->
+        <div class="macro-card">
+          <div class="macro-accent" style="background:#d0c6ab"></div>
+          <div class="macro-body">
+            <span class="ms macro-icon" style="color:#d0c6ab">water_drop</span>
+            <div class="macro-name" style="color:#d0c6ab">الدهون الصحية</div>
+            <div class="macro-en">Healthy Fats</div>
+            <div class="macro-amount" style="color:#d0c6ab">0.8–1<span style="font-size:14px">g</span></div>
+            <div class="macro-unit">لكل كجم وزن جسم</div>
+            <div class="macro-desc">أساسية لإنتاج هرمون التستوستيرون. زيت الزيتون، الأفوكادو، المكسرات، وأوميغا 3 من السمك الدهني.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ توقيت الوجبات -->
+  <div class="nutr-block">
+    <div class="nutr-block-hdr">
+      <span class="ms">schedule</span>
+      <h2>توقيت الوجبات — Nutrient Timing</h2>
+    </div>
+    <div class="nutr-block-body">
+      <div class="timing-grid">
+        <!-- Pre -->
+        <div class="timing-card">
+          <div class="timing-card-hdr" style="border-bottom-color:rgba(255,215,0,.25)">
+            <span class="ms" style="color:#ffd700">morning</span>
+            <div>
+              <h3 style="color:#ffd700">قبل التمرين</h3>
+              <div style="font-size:9px;color:var(--text-dim);margin-top:2px">30–60 دقيقة مسبقاً</div>
+            </div>
+          </div>
+          <div class="timing-card-body">
+            <div class="timing-item"><div class="timing-dot"></div><span>كربوهيدرات سريعة + بروتين خفيف</span></div>
+            <div class="timing-item"><div class="timing-dot"></div><span>موز، تمر، أو شوفان مع بياض البيض</span></div>
+            <div class="timing-item"><div class="timing-dot"></div><span>تجنب الدهون الثقيلة قبل التمرين مباشرة</span></div>
+            <div class="timing-item"><div class="timing-dot"></div><span>150–200mg كافيين إذا احتجت تعزيز التركيز</span></div>
+          </div>
+        </div>
+        <!-- Post -->
+        <div class="timing-card">
+          <div class="timing-card-hdr" style="border-bottom-color:rgba(233,196,0,.25)">
+            <span class="ms" style="color:#e9c400">fitness_center</span>
+            <div>
+              <h3 style="color:#e9c400">بعد التمرين</h3>
+              <div style="font-size:9px;color:var(--text-dim);margin-top:2px">خلال 60 دقيقة — النافذة الذهبية</div>
+            </div>
+          </div>
+          <div class="timing-card-body">
+            <div class="timing-item"><div class="timing-dot"></div><span>واي بروتين 25–30g سريع الامتصاص</span></div>
+            <div class="timing-item"><div class="timing-dot"></div><span>كربوهيدرات عالية المؤشر الجلايسيمي (أرز أبيض، موز)</span></div>
+            <div class="timing-item"><div class="timing-dot"></div><span>لا تضيع هذه النافذة — الجسم في أعلى حالات الامتصاص</span></div>
+          </div>
+        </div>
+        <!-- Sleep -->
+        <div class="timing-card">
+          <div class="timing-card-hdr" style="border-bottom-color:rgba(208,198,171,.25)">
+            <span class="ms" style="color:#d0c6ab">bedtime</span>
+            <div>
+              <h3 style="color:#d0c6ab">قبل النوم</h3>
+              <div style="font-size:9px;color:var(--text-dim);margin-top:2px">30 دقيقة قبل النوم</div>
+            </div>
+          </div>
+          <div class="timing-card-body">
+            <div class="timing-item"><div class="timing-dot"></div><span>كاسيين بروتين أو جبن قريش</span></div>
+            <div class="timing-item"><div class="timing-dot"></div><span>بطيء الامتصاص يحمي العضلات أثناء الصيام الليلي</span></div>
+            <div class="timing-item"><div class="timing-dot"></div><span>قلل الكربوهيدرات — الجسم لا يحتاجها للنوم</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ المكملات -->
+  <div class="nutr-block">
+    <div class="nutr-block-hdr">
+      <span class="ms">science</span>
+      <h2>المكملات الغذائية</h2>
+      <span class="sub">مرتبة حسب الأولوية</span>
+    </div>
+    <div class="nutr-block-body">
+      <div class="supp-table">
+        <div class="supp-row">
+          <div class="supp-accent" style="background:#ffd700"></div>
+          <div class="supp-info">
+            <div class="supp-name-ar">كرياتين مونوهيدرات</div>
+            <div class="supp-name-en">Creatine Monohydrate</div>
+          </div>
+          <div class="supp-right">
+            <div class="supp-dose" style="color:#ffd700">5g يومياً</div>
+            <div class="supp-timing">أي وقت — مع الماء</div>
+          </div>
+          <div class="supp-badge"><span style="color:#ffd700;border-color:rgba(255,215,0,.4)">ضروري</span></div>
+        </div>
+        <div class="supp-row">
+          <div class="supp-accent" style="background:#e9c400"></div>
+          <div class="supp-info">
+            <div class="supp-name-ar">واي بروتين</div>
+            <div class="supp-name-en">Whey Protein Isolate</div>
+          </div>
+          <div class="supp-right">
+            <div class="supp-dose" style="color:#e9c400">25–30g</div>
+            <div class="supp-timing">بعد التمرين مباشرة</div>
+          </div>
+          <div class="supp-badge"><span style="color:#e9c400;border-color:rgba(233,196,0,.4)">مهم</span></div>
+        </div>
+        <div class="supp-row">
+          <div class="supp-accent" style="background:#d0c6ab"></div>
+          <div class="supp-info">
+            <div class="supp-name-ar">كافيين</div>
+            <div class="supp-name-en">Caffeine / Pre-Workout</div>
+          </div>
+          <div class="supp-right">
+            <div class="supp-dose" style="color:#d0c6ab">150–200mg</div>
+            <div class="supp-timing">30 دقيقة قبل التمرين</div>
+          </div>
+          <div class="supp-badge"><span style="color:#d0c6ab;border-color:rgba(208,198,171,.35)">اختياري</span></div>
+        </div>
+        <div class="supp-row">
+          <div class="supp-accent" style="background:#999077"></div>
+          <div class="supp-info">
+            <div class="supp-name-ar">أوميغا-3</div>
+            <div class="supp-name-en">Fish Oil / Omega-3</div>
+          </div>
+          <div class="supp-right">
+            <div class="supp-dose" style="color:#999077">2–3g</div>
+            <div class="supp-timing">مع وجبة تحتوي دهوناً</div>
+          </div>
+          <div class="supp-badge"><span style="color:#999077;border-color:rgba(153,144,119,.35)">مفيد</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ الاستشفاء -->
+  <div class="nutr-block">
+    <div class="nutr-block-hdr">
+      <span class="ms">spa</span>
+      <h2>الاستشفاء والعوامل المساعدة</h2>
+    </div>
+    <div class="nutr-block-body">
+      <div class="recover-grid">
+        <div class="recover-card">
+          <span class="ms">bedtime</span>
+          <h3>النوم العميق</h3>
+          <div class="amount">7–9 ساعات</div>
+          <p>هرمون النمو (GH) يُفرز بنسبة 70% أثناء النوم العميق. النوم هو الأنابوليك الأقوى مجاناً — لا تضحِ به من أجل أي شيء.</p>
+        </div>
+        <div class="recover-card">
+          <span class="ms">water_full</span>
+          <h3>الترطيب</h3>
+          <div class="amount">3–4 لترات</div>
+          <p>الجفاف 2% يخفض الأداء بنسبة 30%. اشرب ماء طوال اليوم، وزد الكمية في أيام التمرين وفي الطقس الحار.</p>
+        </div>
+        <div class="recover-card">
+          <span class="ms">self_improvement</span>
+          <h3>إدارة التوتر</h3>
+          <div class="amount">كورتيزول منخفض</div>
+          <p>التوتر الزائد يرفع الكورتيزول الذي يكسر العضلات ويمنع نموها. المشي، التأمل، والنوم الكافي يُخفضان الكورتيزول بشكل ملحوظ.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="nutr-footer">
+    <p><strong style="color:var(--gold)">تذكر دائماً:</strong> لا يوجد برنامج تغذية مثالي للجميع. ابدأ بالأساسيات، تتبع تقدمك لمدة 4 أسابيع، وعدّل وفقاً لاستجابة جسمك. الاتساق على مدى أشهر أهم بكثير من الكمال لأسبوع واحد.</p>
+    <div class="nutr-footer-badge"><span class="ms" style="font-size:16px">emoji_events</span>CONSISTENCY IS KEY</div>
+  </div>
+
+</div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════ BOTTOM NAV ═══════════════════════════ -->
+<nav id="bottom-nav">
+  <button onclick="nav('training')" id="bn-training"><span class="ms">home</span>الرئيسية</button>
+  <button onclick="nav('schedule')" id="bn-schedule"><span class="ms">calendar_month</span>الجدول</button>
+  <button onclick="nav('exercises')" id="bn-exercises"><span class="ms">fitness_center</span>التمارين</button>
+  <button onclick="nav('nutrition')" id="bn-nutrition"><span class="ms">restaurant</span>التغذية</button>
+</nav>
+
+<!-- ═══════════════════════════════ SCRIPT ══════════════════════════════ -->
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const P = {
+  hero:          "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  heroChest:     "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  heroLegs:      "https://images.pexels.com/photos/949131/pexels-photo-949131.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  heroArms:      "https://images.pexels.com/photos/4162579/pexels-photo-4162579.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  heroBack:      "https://images.pexels.com/photos/4164766/pexels-photo-4164766.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  heroShoulders: "https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  bench_press:    "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=400",
+  lat_pulldown:   "https://images.pexels.com/photos/4164761/pexels-photo-4164761.jpeg?auto=compress&cs=tinysrgb&w=400",
+  incline_press:  "https://images.pexels.com/photos/3253503/pexels-photo-3253503.jpeg?auto=compress&cs=tinysrgb&w=400",
+  cable_row:      "https://images.pexels.com/photos/4748989/pexels-photo-4748989.jpeg?auto=compress&cs=tinysrgb&w=400",
+  pec_deck:       "https://images.pexels.com/photos/3831845/pexels-photo-3831845.jpeg?auto=compress&cs=tinysrgb&w=400",
+  hammer_row:     "https://images.pexels.com/photos/4164773/pexels-photo-4164773.jpeg?auto=compress&cs=tinysrgb&w=400",
+  decline_press:  "https://images.pexels.com/photos/3490368/pexels-photo-3490368.jpeg?auto=compress&cs=tinysrgb&w=400",
+  pullover:       "https://images.pexels.com/photos/3837755/pexels-photo-3837755.jpeg?auto=compress&cs=tinysrgb&w=400",
+  deadlift:       "https://images.pexels.com/photos/4164766/pexels-photo-4164766.jpeg?auto=compress&cs=tinysrgb&w=400",
+  bent_row:       "https://images.pexels.com/photos/3621875/pexels-photo-3621875.jpeg?auto=compress&cs=tinysrgb&w=400",
+  face_pull:      "https://images.pexels.com/photos/4162592/pexels-photo-4162592.jpeg?auto=compress&cs=tinysrgb&w=400",
+  shoulder_press: "https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=400",
+  lateral_raise:  "https://images.pexels.com/photos/4162585/pexels-photo-4162585.jpeg?auto=compress&cs=tinysrgb&w=400",
+  barbell_curl:   "https://images.pexels.com/photos/4162579/pexels-photo-4162579.jpeg?auto=compress&cs=tinysrgb&w=400",
+  skull_crusher:  "https://images.pexels.com/photos/4753879/pexels-photo-4753879.jpeg?auto=compress&cs=tinysrgb&w=400",
+  hammer_curl:    "https://images.pexels.com/photos/4162494/pexels-photo-4162494.jpeg?auto=compress&cs=tinysrgb&w=400",
+  cable_pushdown: "https://images.pexels.com/photos/4162537/pexels-photo-4162537.jpeg?auto=compress&cs=tinysrgb&w=400",
+  squat:          "https://images.pexels.com/photos/949131/pexels-photo-949131.jpeg?auto=compress&cs=tinysrgb&w=400",
+  leg_press:      "https://images.pexels.com/photos/3837757/pexels-photo-3837757.jpeg?auto=compress&cs=tinysrgb&w=400",
+  rdl:            "https://images.pexels.com/photos/4397540/pexels-photo-4397540.jpeg?auto=compress&cs=tinysrgb&w=400",
+  leg_curl:       "https://images.pexels.com/photos/4162462/pexels-photo-4162462.jpeg?auto=compress&cs=tinysrgb&w=400",
+  calf_raise:     "https://images.pexels.com/photos/3837751/pexels-photo-3837751.jpeg?auto=compress&cs=tinysrgb&w=400",
+  hack_squat:     "https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=400",
+  leg_extension:  "https://images.pexels.com/photos/3837780/pexels-photo-3837780.jpeg?auto=compress&cs=tinysrgb&w=400",
+};
+
+const DAYS = [
+  { id:0, dayNum:"اليوم الأول", dayAr:"السبت", dayEn:"SAT", title:"الصدر والظهر", muscles:"Chest · Back", dur:90, exC:6, sets:19, weekly:"2×", hero:P.heroChest, wd:6,
+    groups:[
+      { nameAr:"عضلات الصدر", nameEn:"Chest · Pectoralis", icon:"fitness_center", count:"3 تمارين", exs:[
+        { name:"ماكينة الصدر المايل", sets:"3 مجموعات × 10–12 تكرار — راحة 90 ث", feat:true, img:P.incline_press, classic:"Incline DB Press", tipsLbl:"تيبس الشكل الصح", tips:["ارفع المقعد على زاوية 30-45° — ركز على الجزء العلوي","إبدأ بوزن معقول للإحماء قبل التثقيل الأساسي","ضغط الكتفين للخلف وللأسفل طول الجولة","ارجع ببطء 2-3 ثواني — الـ eccentric هو سر الضخامة"] },
+        { name:"تشيست برس ماكينة", sets:"3 مجموعات × 8–10 تكرار — راحة 90 ث", feat:true, img:P.bench_press, classic:"Bench Press (بنش برس)", tipsLbl:"تيبس الشكل الصح", tips:["اضبط المقعد بحيث المقابض على مستوى الصدر تماماً","ادفع للأمام ببطء — الـ eccentric بطيء 2-3 ثواني","متقفلش المرفقين فوق","ضغط الكتفين للخلف وللأسفل"] },
+        { name:"الفراشة (بيك ديك)", sets:"3 مجموعات × 15 تكرار", img:P.pec_deck, classic:"Chest Fly / Cable Crossover", tipsLbl:"الهدف", tips:["عزل كامل للصدر مع ثبات المسار وأقصى تمدد","ركز على الضغط في قمة الحركة لمدة ثانية كاملة"] },
+      ]},
+      { nameAr:"عضلات الظهر", nameEn:"Back · Latissimus · Rhomboids", icon:"straighten", count:"3 تمارين", exs:[
+        { name:"لات بول داون", sets:"4 مجموعات × 12 تكرار — راحة 90 ث", feat:true, img:P.lat_pulldown, classic:"Pull-Ups (عقلة)", tipsLbl:"تيبس الشكل الصح", tips:["امسك البار بعرض أعرض من الكتف","اسحب للصدر مش للرقبة — وميل الجذع للخلف 15-20° بس","اضغط اللاتيسيموس لأسفل وللخلف","ارجع ببطء للأعلى — Full Stretch ضروري"] },
+        { name:"رو بمقعد الصدر", sets:"3 مجموعات × 10 تكرار — راحة 75 ث", img:P.cable_row, classic:"Bent-Over Barbell Row", tipsLbl:"الهدف", tips:["تجديف بدعم كامل للصدر لتركيز الكثافة في الظهر","اسحب المرفقين لأعلى وللخلف"] },
+        { name:"هامر رو | هامر ستيرنث", sets:"3 مجموعات × 10 تكرار — راحة 75 ث", img:P.hammer_row, classic:"T-Bar Row (سحب تي-بار)", tipsLbl:"الهدف", tips:["ماكينة بناء سماكة الظهر الكاملة","تحكم في الوزن — ارجع ببطء لتمديد الألياف بالكامل"] },
+      ]},
+    ]
+  },
+  { id:1, dayNum:"اليوم الثاني", dayAr:"الأحد", dayEn:"SUN", title:"الأكتاف والذراعين", muscles:"Shoulders · Biceps · Triceps", dur:75, exC:6, sets:18, weekly:"2×", hero:P.heroShoulders, wd:0,
+    groups:[
+      { nameAr:"الأكتاف", nameEn:"Shoulders · Deltoids", icon:"shield", count:"3 تمارين", exs:[
+        { name:"شولدر برس ماكينة", sets:"3 مجموعات × 10 تكرار — راحة 90 ث", feat:true, img:P.shoulder_press, classic:"DB / Barbell Shoulder Press", tipsLbl:"تيبس الشكل الصح", tips:["اضبط المقعد بحيث المقابض تيجي على مستوى الكتف","ضهرك ملصق بالمقعد طول الوقت","متقفلش الكوعين فوق","انزل ببطء لمستوى الأذن — Full ROM ضروري"] },
+        { name:"لات ريز ماكينة", sets:"3 مجموعات × 15 تكرار — راحة 60 ث", img:P.lateral_raise, classic:"DB Lateral Raise", tipsLbl:"الهدف", tips:["عزل الرأس الجانبي للكتف — يعطي عرض الأكتاف المطلوب","ارفع لمستوى الكتف فقط"] },
+        { name:"فيس بول بالكابل", sets:"3 مجموعات × 12 تكرار — راحة 60 ث", img:P.face_pull, classic:"Band Face Pull", tipsLbl:"الهدف", tips:["يستهدف الرأس الخلفي للكتف — ضروري للتناسق والوقاية من الإصابات","اسحب الحبل لمستوى الأنف مع توجيه المرفقين للخارج"] },
+      ]},
+      { nameAr:"البايسبس", nameEn:"Biceps · Brachialis", icon:"sports_gymnastics", count:"2 تمارين", exs:[
+        { name:"كيرل ماكينة", sets:"3 مجموعات × 12 تكرار — راحة 60 ث", feat:true, img:P.barbell_curl, classic:"Barbell / DB Bicep Curl", tipsLbl:"الهدف", tips:["تركيز كامل على البايسبس بثبات الجسم","ارجع ببطء للأسفل — Full extension في القاع"] },
+        { name:"ماكينة اسكوت (بريتشر)", sets:"3 مجموعات × 10 تكرار — راحة 60 ث", img:P.hammer_curl, classic:"EZ-Bar Preacher Curl", tipsLbl:"الهدف", tips:["عزل الرأس القريب من المرفق — يحقق الكثافة والطول في البايسبس","متدفعش المرفق من المسند"] },
+      ]},
+      { nameAr:"الترايسبس", nameEn:"Triceps · Long Head", icon:"back_hand", count:"1 تمرين", exs:[
+        { name:"ترايسبس ماكينة", sets:"3 مجموعات × 15 تكرار — راحة 60 ث", feat:true, img:P.cable_pushdown, classic:"Overhead DB Extension / Close-Grip Bench", tipsLbl:"الهدف", tips:["يستهدف الثلاثة رؤوس للترايسبس — أهم عضلة في حجم الذراع (60%)","ادفع للأسفل بالكامل وحافظ على المرفقين ثابتين"] },
+      ]},
+    ]
+  },
+  { id:2, dayNum:"اليوم الثالث", dayAr:"الاثنين", dayEn:"MON", title:"الأرجل", muscles:"Quads · Hamstrings · Calves", dur:100, exC:5, sets:17, weekly:"2×", hero:P.heroLegs, wd:1,
+    groups:[
+      { nameAr:"الفخذ الأمامي", nameEn:"Quads · Quadriceps", icon:"directions_run", count:"3 تمارين", exs:[
+        { name:"هاك سكوات", sets:"4 مجموعات × 10 تكرار — راحة 90 ث", feat:true, img:P.hack_squat, classic:"Barbell Back Squat", tipsLbl:"تيبس الشكل الصح", tips:["ارفع القدم للأعلى على اللوح — كلما ارتفعت القدم زاد تشغيل الفخذ الأمامي","ضهرك ملصق بالمقعد طول الوقت","انزل لحد الـ 90° أو أعمق بالراحة","ابدأ بوزن معقول وركز على Full Range of Motion"] },
+        { name:"ليج برس", sets:"4 مجموعات × 12 تكرار — راحة 120 ث", feat:true, img:P.leg_press, classic:"Barbell Back Squat", tipsLbl:"تيبس الشكل الصح", tips:["ضع القدمين على الحامل بعرض الكتف","انزل لحد الـ 90° — Full ROM لتفعيل الكواد الكاملة","متقفلش الركبة فوق"] },
+        { name:"رومانيان ديدليفت", sets:"3 مجموعات × 10 تكرار — راحة 90 ث", img:P.rdl, classic:"Stiff-Leg Deadlift", tipsLbl:"الهدف", tips:["ثبت الظهر في وضع محايد طول الحركة","ابدأ بوزن خفيف وزد تدريجياً"] },
+      ]},
+      { nameAr:"الفخذ الخلفي", nameEn:"Hamstrings · Biceps Femoris", icon:"hiking", count:"1 تمرين", exs:[
+        { name:"ليج كيرل", sets:"3 مجموعات × 15 تكرار — راحة 60 ث", feat:true, img:P.leg_curl, classic:"Romanian Deadlift (RDL)", tipsLbl:"الهدف", tips:["انثن الركبة ببطء وتحكم في الوزن عند الرجوع","ركز على الانقباض الكامل في القمة"] },
+      ]},
+      { nameAr:"السمانة", nameEn:"Calves · Gastrocnemius", icon:"transfer_within_a_station", count:"1 تمرين", exs:[
+        { name:"كاف ريز واقف", sets:"4 مجموعات × 25 تكرار — راحة 60 ث", img:P.calf_raise, classic:"Seated Calf Raise", tipsLbl:"الهدف", tips:["Full ROM — ارفع لأقصى نقطة واثبت ثانية ثم انزل ببطء","السمانة تحتاج تكرارات عالية للنمو"] },
+      ]},
+    ]
+  },
+  { id:3, dayNum:"اليوم الرابع", dayAr:"الثلاثاء", dayEn:"TUE", title:"الصدر والظهر", muscles:"Chest · Back — الجولة الثانية", dur:90, exC:6, sets:19, weekly:"+5%", hero:P.heroChest, wd:2, note:"نفس التمارين — زود الوزن 5% وركز على الشكل الصح",
+    groups:[
+      { nameAr:"عضلات الصدر", nameEn:"Chest · Round 2", icon:"fitness_center", count:"3 تمارين", exs:[
+        { name:"ماكينة الصدر المايل", sets:"3 مجموعات × 10–12 تكرار — راحة 90 ث", feat:true, img:P.incline_press, classic:"Incline DB Press", tipsLbl:"هدف الجولة الثانية", tips:["زود الوزن 2.5 كجم عن الجولة الأولى","حافظ على Full ROM — متضحيش بالمدى"] },
+        { name:"تشيست برس ماكينة", sets:"3 مجموعات × 8–10 تكرار — راحة 90 ث", feat:true, img:P.bench_press, classic:"Bench Press", tipsLbl:"هدف الجولة الثانية", tips:["جرب Drop Set في المجموعة الأخيرة لأقصى استنزاف للصدر"] },
+        { name:"الفراشة (بيك ديك)", sets:"3 مجموعات × 15 تكرار", img:P.pec_deck, classic:"Chest Fly", tipsLbl:"هدف الجولة الثانية", tips:["حاول تزيد وزن بسيط أو تضيف تكرار"] },
+      ]},
+      { nameAr:"عضلات الظهر", nameEn:"Back · Round 2", icon:"straighten", count:"3 تمارين", exs:[
+        { name:"لات بول داون", sets:"4 مجموعات × 12 تكرار — راحة 90 ث", feat:true, img:P.lat_pulldown, classic:"Pull-Ups", tipsLbl:"هدف الجولة الثانية", tips:["جرب Neutral Grip أو Close Grip للتنويع","زود الوزن تدريجياً"] },
+        { name:"رو بمقعد الصدر", sets:"3 مجموعات × 10 تكرار — راحة 75 ث", img:P.cable_row, classic:"Bent-Over Barbell Row", tipsLbl:"هدف الجولة الثانية", tips:["غير زاوية السحب للأسفل قليلاً لتستهدف أسفل اللاتيسيموس"] },
+        { name:"هامر رو | هامر ستيرنث", sets:"3 مجموعات × 10 تكرار — راحة 75 ث", img:P.hammer_row, classic:"T-Bar Row", tipsLbl:"هدف الجولة الثانية", tips:["زود الوزن 5 كجم — الهامر رو مثالية للتقدم التدريجي الآمن"] },
+      ]},
+    ]
+  },
+  { id:4, dayNum:"اليوم الخامس", dayAr:"الأربعاء", dayEn:"WED", title:"الأكتاف والذراعين", muscles:"Shoulders · Biceps · Triceps — الجولة الثانية", dur:75, exC:6, sets:18, weekly:"+5%", hero:P.heroShoulders, wd:3, note:"ضيف Superset بين البايسبس والترايسبس لضخ أكبر",
+    groups:[
+      { nameAr:"الأكتاف", nameEn:"Shoulders · Round 2", icon:"shield", count:"3 تمارين", exs:[
+        { name:"شولدر برس ماكينة", sets:"3 مجموعات × 10 تكرار — راحة 90 ث", feat:true, img:P.shoulder_press, classic:"Shoulder Press", tipsLbl:"هدف الجولة الثانية", tips:["زود الوزن 2.5 كجم — الأكتاف تتعافى جيداً في 3 أيام"] },
+        { name:"لات ريز ماكينة", sets:"3 مجموعات × 15 تكرار — راحة 60 ث", img:P.lateral_raise, classic:"DB Lateral Raise", tipsLbl:"هدف الجولة الثانية", tips:["جرب 21s: 7 تكرارات نص أسفل، 7 نص أعلى، 7 كاملة"] },
+        { name:"فيس بول بالكابل", sets:"3 مجموعات × 12 تكرار — راحة 60 ث", img:P.face_pull, classic:"Band Face Pull", tipsLbl:"هدف الجولة الثانية", tips:["اضيف External Rotation في نهاية كل تكرار للرأس الخلفي الكامل"] },
+      ]},
+      { nameAr:"البايسبس", nameEn:"Biceps · Round 2", icon:"sports_gymnastics", count:"2 تمارين", exs:[
+        { name:"كيرل ماكينة", sets:"3 مجموعات × 12 تكرار — راحة 60 ث", feat:true, img:P.barbell_curl, classic:"Barbell Curl", tipsLbl:"هدف الجولة الثانية", tips:["Superset مع الترايسبس مباشرةً — بدون راحة بينهم"] },
+        { name:"ماكينة اسكوت (بريتشر)", sets:"3 مجموعات × 10 تكرار — راحة 60 ث", img:P.hammer_curl, classic:"EZ-Bar Preacher Curl", tipsLbl:"هدف الجولة الثانية", tips:["زود الوزن أو اضيف تكرارات إضافية"] },
+      ]},
+      { nameAr:"الترايسبس", nameEn:"Triceps · Round 2", icon:"back_hand", count:"1 تمرين", exs:[
+        { name:"ترايسبس ماكينة", sets:"3 مجموعات × 15 تكرار — راحة 60 ث", feat:true, img:P.cable_pushdown, classic:"Overhead DB Extension", tipsLbl:"هدف الجولة الثانية", tips:["Superset مع البايسبس — مفتاح الـ PUMP الذي يجعل الأذرع تنفجر"] },
+      ]},
+    ]
+  },
+  { id:5, dayNum:"اليوم السادس", dayAr:"الخميس", dayEn:"THU", title:"الأرجل", muscles:"Quads · Hamstrings · Calves — الجولة الثانية", dur:100, exC:5, sets:17, weekly:"+5%", hero:P.heroLegs, wd:4, note:"الأرجل عضلات كبيرة — ركز على التقدم التدريجي في الوزن كل أسبوع",
+    groups:[
+      { nameAr:"الفخذ الأمامي", nameEn:"Quads · Round 2", icon:"directions_run", count:"3 تمارين", exs:[
+        { name:"هاك سكوات", sets:"4 مجموعات × 10 تكرار — راحة 90 ث", feat:true, img:P.hack_squat, classic:"Barbell Back Squat", tipsLbl:"هدف الجولة الثانية", tips:["زود الوزن 5-10 كجم — الأرجل تحمل ضعف الجزء العلوي","جرب Pause Squat: قف ثانيتين في القاع"] },
+        { name:"ليج برس", sets:"4 مجموعات × 12 تكرار — راحة 120 ث", feat:true, img:P.leg_press, classic:"Barbell Squat", tipsLbl:"هدف الجولة الثانية", tips:["غير وضع القدم للنص الأسفل لتستهدف أسفل الكواد","في المجموعة الأخيرة — Drop Set بعد الفشل"] },
+        { name:"ليج إكستنشن", sets:"3 مجموعات × 20 تكرار — راحة 60 ث", img:P.leg_extension, classic:"Bulgarian Split Squat", tipsLbl:"هدف الجولة الثانية", tips:["اضيف Rest-Pause: اعمل 15 تكرار، استنى 10 ثواني، كمّل 5 تانية"] },
+      ]},
+      { nameAr:"الفخذ الخلفي", nameEn:"Hamstrings · Round 2", icon:"hiking", count:"1 تمرين", exs:[
+        { name:"ليج كيرل", sets:"3 مجموعات × 15 تكرار — راحة 60 ث", feat:true, img:P.leg_curl, classic:"Romanian Deadlift", tipsLbl:"هدف الجولة الثانية", tips:["جرب Single-Leg للمقارنة بين الجانبين وتصحيح الاختلال العضلي"] },
+      ]},
+      { nameAr:"السمانة", nameEn:"Calves · Round 2", icon:"transfer_within_a_station", count:"1 تمرين", exs:[
+        { name:"ماكينة السمانة", sets:"3 مجموعات × 25 تكرار — راحة 60 ث", img:P.calf_raise, classic:"Standing Calf Raises", tipsLbl:"هدف الجولة الثانية", tips:["زود التكرارات لـ 30 أو اضيف Drop Set — السمانة تتكيف بسرعة جداً"] },
+      ]},
+    ]
+  },
+  { id:6, dayNum:"يوم الراحة", dayAr:"الجمعة", dayEn:"FRI", title:"راحة", muscles:"Recovery", dur:0, exC:0, sets:0, weekly:"—", hero:P.hero, wd:5, groups:[] },
+];
+
+const DAYS_AR = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+const MONTHS_AR = ["يناير","فبراير","مارس","إبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let currentPage = 'training';
+let selectedWeekDay = null;
+let activeExTab = 0;
+let clockTimer = null;
+
+// ── NAV ───────────────────────────────────────────────────────────────────
+function nav(page, exDayId) {
+  currentPage = page;
+  if (exDayId !== undefined) activeExTab = exDayId;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('#desk-nav button').forEach(b => b.classList.remove('active'));
+  const dn = document.getElementById('dn-' + page);
+  if (dn) dn.classList.add('active');
+  document.querySelectorAll('#bottom-nav button').forEach(b => b.classList.remove('active'));
+  const bn = document.getElementById('bn-' + page);
+  if (bn) bn.classList.add('active');
+  if (page === 'schedule') renderSchedule();
+  if (page === 'exercises') renderExercises();
+  window.scrollTo(0, 0);
+}
+
+// ── SCHEDULE ──────────────────────────────────────────────────────────────
+function getWeekNum(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - day);
+  const y = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil(((date - y) / 86400000 + 1) / 7);
+}
+
+function startClock() {
+  if (clockTimer) clearInterval(clockTimer);
+  function tick() {
+    if (currentPage !== 'schedule') return;
+    const now = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    const el = document.getElementById('s-time');
+    if (el) el.textContent = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+    const wk = document.getElementById('s-week');
+    if (wk) wk.textContent = getWeekNum(now);
+  }
+  tick();
+  clockTimer = setInterval(tick, 1000);
+}
+
+function renderSchedule() {
+  const now = new Date();
+  const wd = now.getDay();
+  const dateEl = document.getElementById('s-date');
+  if (dateEl) dateEl.textContent = DAYS_AR[now.getDay()] + '، ' + now.getDate() + ' ' + MONTHS_AR[now.getMonth()] + ' ' + now.getFullYear();
+  startClock();
+
+  const todayD = DAYS.find(d => d.wd === wd) || null;
+  const selD = selectedWeekDay !== null ? DAYS.find(d => d.wd === selectedWeekDay) : null;
+  const disp = selD || todayD;
+
+  const isRest = !disp || disp.id === 6 || disp.exC === 0;
+  const todayBlock = document.getElementById('s-today-block');
+  if (todayBlock) {
+    if (isRest) {
+      todayBlock.innerHTML = `<div class="rest-box"><span class="ms">spa</span><h2>يوم الراحة</h2><p>الاستشفاء جزء أساسي من البرنامج — العضلات تنمو في الراحة لا في النادي</p></div>`;
+    } else {
+      const tagLbl = selectedWeekDay === null ? 'اليوم' : disp.dayAr;
+      todayBlock.innerHTML = `
+        <div class="today-hero">
+          <div class="today-hero-bg" style="background-image:url('${disp.hero}')"></div>
+          <div class="today-hero-grad"></div>
+          <div class="today-hero-body">
+            <div class="today-tags">
+              <span class="tag-gold">${tagLbl}</span>
+              <span style="font-size:9px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.1em">${disp.dayNum}</span>
+            </div>
+            <div class="today-title">${disp.title}</div>
+            <div class="today-sub">${disp.muscles}</div>
+            <div class="today-stats">
+              <div class="today-stat"><div><div class="today-stat-val">${disp.dur}</div><div class="today-stat-lbl">دقيقة</div></div></div>
+              <div style="width:1px;height:32px;background:rgba(77,71,50,.5)"></div>
+              <div class="today-stat"><div><div class="today-stat-val">${disp.exC}</div><div class="today-stat-lbl">تمرين</div></div></div>
+              <div style="width:1px;height:32px;background:rgba(77,71,50,.5)"></div>
+              <div class="today-stat"><div><div class="today-stat-val">${disp.sets}</div><div class="today-stat-lbl">مجموعة</div></div></div>
+            </div>
+            <button class="btn-view" onclick="nav('exercises',${disp.id})">عرض التمارين كاملة</button>
+          </div>
+        </div>`;
+    }
+  }
+
+  const ql = document.getElementById('s-quicklist-block');
+  if (ql) {
+    if (!isRest && disp) {
+      const allExs = disp.groups.flatMap(g => g.exs);
+      const label = selectedWeekDay === null ? 'اليوم' : disp.dayAr;
+      ql.innerHTML = `<div class="quick-list-wrap">
+        <div class="view-all-row">
+          <div class="section-label"><div class="bar"></div><span>تمارين ${label} بالترتيب</span></div>
+          <button class="link-gold" onclick="nav('exercises',${disp.id})">التفاصيل الكاملة <span class="ms" style="font-size:14px">open_in_new</span></button>
+        </div>
+        <div class="quick-list">${allExs.map(ex => `
+          <div class="quick-item">
+            ${ex.img ? `<img src="${ex.img}" alt="" loading="lazy"/>` : ''}
+            <div style="flex:1;min-width:0">
+              <div class="quick-item-name">${ex.name}</div>
+              <div class="quick-item-sets">${ex.sets}</div>
+            </div>
+            ${ex.feat ? '<span class="tag-gold" style="font-size:7px;padding:2px 5px;flex-shrink:0">مميز</span>' : ''}
+          </div>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      ql.innerHTML = '';
+    }
+  }
+
+  const grid = document.getElementById('s-week-grid');
+  if (grid) {
+    grid.innerHTML = DAYS.map(day => {
+      const isT = day.wd === wd;
+      const isSel = selectedWeekDay === day.wd;
+      const isR = day.id === 6;
+      return `<div class="week-card${isT?' today-card':''}${isSel?' selected-card':''}" onclick="selectDay(${day.wd})">
+        <div class="week-day-name">${day.dayAr}</div>
+        ${isT ? '<div class="week-today-badge">اليوم</div>' : ''}
+        <div class="week-title">${isR ? 'راحة' : day.title}</div>
+        ${!isR ? `<div class="week-meta">${day.dur} د · ${day.exC} تم</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+}
+
+function selectDay(wd) {
+  selectedWeekDay = selectedWeekDay === wd ? null : wd;
+  renderSchedule();
+}
+
+// ── EXERCISES ─────────────────────────────────────────────────────────────
+const EX_TABS = [
+  {label:'الصدر\nوالظهر',num:'يوم 1',day:'SAT',id:0},
+  {label:'أكتاف\nوذراعين',num:'يوم 2',day:'SUN',id:1},
+  {label:'الأرجل',num:'يوم 3',day:'MON',id:2},
+  {label:'الصدر\nوالظهر',num:'يوم 4',day:'TUE',id:3},
+  {label:'أكتاف\nوذراعين',num:'يوم 5',day:'WED',id:4},
+  {label:'الأرجل',num:'يوم 6',day:'THU',id:5},
+];
+
+function renderExercises() {
+  // Tabs
+  const tabsEl = document.getElementById('ex-tabs');
+  if (tabsEl) {
+    tabsEl.innerHTML = EX_TABS.map(t => {
+      const lines = t.label.split('\n');
+      return `<button class="ex-tab${activeExTab===t.id?' active':''}" onclick="switchExTab(${t.id})">
+        <span class="tab-num">${t.num}</span>
+        <span class="tab-name">${lines[0]}${lines[1]?'<br/>'+lines[1]:''}</span>
+        <span class="tab-day">${t.day}</span>
+      </button>`;
+    }).join('');
+  }
+
+  const day = DAYS[activeExTab];
+  const isR2 = activeExTab >= 3;
+  const content = document.getElementById('ex-day-content');
+  if (!content) return;
+
+  content.innerHTML = `
+    <div class="ex-day-header">
+      <div class="ex-day-meta">
+        <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold)">${day.dayNum} — ${day.dayAr}</span>
+        <span style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em">${isR2?'الجولة الثانية':'الجولة الأولى'}</span>
+        ${isR2?'<span style="font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;padding:3px 7px;border:1px solid rgba(255,215,0,.35);color:var(--gold)">الجولة 2</span>':''}
+      </div>
+      <div class="ex-day-title">${day.title}</div>
+      ${day.note?`<div class="ex-day-note"><span class="ms">lightbulb</span><span>${day.note}</span></div>`:''}
+      <div class="ex-counters">
+        <div class="ex-counter"><div class="ex-counter-val">${day.dur}</div><div class="ex-counter-lbl">دقيقة</div></div>
+        <div class="ex-counter"><div class="ex-counter-val">${day.exC}</div><div class="ex-counter-lbl">تمارين</div></div>
+        <div class="ex-counter"><div class="ex-counter-val">${day.sets}</div><div class="ex-counter-lbl">إجمالي مجموعات</div></div>
+        <div class="ex-counter"><div class="ex-counter-val">${day.weekly}</div><div class="ex-counter-lbl">أسبوعياً</div></div>
+      </div>
+    </div>
+    <div class="ex-groups">
+      ${day.groups.map(g => `
+        <div class="muscle-card">
+          <div class="muscle-hdr">
+            <div class="muscle-icon-box"><span class="ms">${g.icon}</span></div>
+            <div style="flex:1">
+              <div class="muscle-name-ar">${g.nameAr}</div>
+              <div class="muscle-name-en">${g.nameEn}</div>
+            </div>
+            <div class="muscle-count">${g.count}</div>
+          </div>
+          ${g.exs.map(ex => `
+            <div class="ex-card${ex.feat?' featured':''}">
+              <div class="ex-card-top">
+                ${ex.img?`<img class="ex-card-img" src="${ex.img}" alt="" loading="lazy"/>`:''}
+                <div class="ex-card-info">
+                  <div class="ex-card-name">
+                    ${ex.feat?'<span class="tag-gold" style="font-size:7px;padding:2px 5px;margin-left:4px;vertical-align:middle">مميز</span>':''}
+                    ${ex.name}
+                  </div>
+                  <div class="ex-card-sets">${ex.sets}</div>
+                </div>
+              </div>
+              <div class="ex-tips">
+                <div class="ex-tips-lbl">${ex.tipsLbl||'الهدف'}</div>
+                ${ex.tips.map(t=>`<div class="ex-tip-row"><div class="ex-tip-dot"></div><span class="ex-tip-txt">${t}</span></div>`).join('')}
+              </div>
+              ${ex.classic?`<div class="ex-alt"><span class="ms">history_edu</span><span class="ex-alt-lbl">بديل كلاسيك:</span><span class="ex-alt-val">${ex.classic}</span></div>`:''}
+            </div>`).join('')}
+        </div>`).join('')}
+    </div>`;
+}
+
+function switchExTab(id) {
+  activeExTab = id;
+  renderExercises();
+  document.getElementById('page-exercises').scrollTo(0,0);
+  window.scrollTo(0,0);
+}
+
+// ── BOOT ──────────────────────────────────────────────────────────────────
+nav('training');
+</script>
+</body>
+</html>
