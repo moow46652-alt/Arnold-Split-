@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IRON LEGACY: The Arnold Split</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "outline-variant": "#4d4732",
+          "tertiary": "#f8f6f5",
+          "surface-container-highest": "#333535",
+          "on-secondary-fixed-variant": "#474646",
+          "error-container": "#93000a",
+          "inverse-primary": "#705d00",
+          "on-error": "#690005",
+          "surface": "#121414",
+          "surface-container-low": "#1a1c1c",
+          "inverse-on-surface": "#2f3131",
+          "primary-fixed": "#ffe16d",
+          "on-tertiary-fixed-variant": "#474746",
+          "primary": "#fff6df",
+          "tertiary-fixed": "#e4e2e1",
+          "on-secondary": "#313030",
+          "primary-container": "#ffd700",
+          "on-tertiary-fixed": "#1b1c1c",
+          "background": "#121414",
+          "on-surface": "#e2e2e2",
+          "surface-container-high": "#282a2b",
+          "secondary-fixed-dim": "#c8c6c5",
+          "on-surface-variant": "#d0c6ab",
+          "outline": "#999077",
+          "surface-dim": "#121414",
+          "primary-fixed-dim": "#e9c400",
+          "on-primary-container": "#705e00",
+          "on-tertiary-container": "#5f5f5f",
+          "error": "#ffb4ab",
+          "secondary-container": "#4a4949",
+          "surface-container-lowest": "#0c0f0f",
+          "on-error-container": "#ffdad6",
+          "on-tertiary": "#303030",
+          "surface-bright": "#37393a",
+          "on-secondary-fixed": "#1c1b1b",
+          "surface-variant": "#333535",
+          "surface-container": "#1e2020",
+          "on-primary-fixed-variant": "#544600",
+          "on-secondary-container": "#bab8b7",
+          "secondary-fixed": "#e5e2e1",
+          "secondary": "#c8c6c5",
+          "on-primary": "#3a3000",
+          "surface-tint": "#e9c400",
+          "on-primary-fixed": "#221b00",
+          "inverse-surface": "#e2e2e2",
+          "tertiary-container": "#dcd9d9",
+          "tertiary-fixed-dim": "#c8c6c5",
+          "on-background": "#e2e2e2"
+        },
+        borderRadius: {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        spacing: {
+          "xl": "80px",
+          "xs": "4px",
+          "margin-desktop": "64px",
+          "base": "8px",
+          "lg": "48px",
+          "margin-mobile": "16px",
+          "md": "24px",
+          "sm": "12px",
+          "gutter": "16px"
+        },
+        fontFamily: {
+          "body-lg": ["Inter", "Noto Sans Arabic", "sans-serif"],
+          "stat-lg": ["Montserrat", "Noto Sans Arabic", "sans-serif"],
+          "headline-md": ["Montserrat", "Noto Sans Arabic", "sans-serif"],
+          "body-md": ["Inter", "Noto Sans Arabic", "sans-serif"],
+          "headline-lg": ["Montserrat", "Noto Sans Arabic", "sans-serif"],
+          "label-md": ["Inter", "Noto Sans Arabic", "sans-serif"],
+          "display-lg": ["Montserrat", "Noto Sans Arabic", "sans-serif"],
+          "headline-lg-mobile": ["Montserrat", "Noto Sans Arabic", "sans-serif"]
+        },
+        fontSize: {
+          "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+          "stat-lg": ["36px", {"lineHeight": "1", "letterSpacing": "-0.01em", "fontWeight": "900"}],
+          "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
+          "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+          "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "800"}],
+          "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+          "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900"}],
+          "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "800"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --electric-gold: #ffd700;
+    --deep-charcoal: #121414;
+  }
+  body {
+    font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
+    background-color: var(--deep-charcoal);
+    color: #e2e2e2;
+    overflow-x: hidden;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .font-display { font-family: 'Montserrat', 'Noto Sans Arabic', sans-serif; }
+  .gold-gradient-text {
+    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .golden-gradient {
+    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+  }
+  .iron-border { border: 1px solid #2A2A2A; }
+  .gold-accent-left { border-right: 4px solid var(--electric-gold); }
+  .active-exercise-border { border-right: 4px solid #ffd700; }
+  .glass-panel {
+    background: rgba(30, 32, 32, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+  }
+  .tactile-btn:active, .tactile-button:active { transform: translateY(2px); }
+  .workout-card-hover:hover {
+    transform: translateY(-4px);
+    border-color: #ffd700;
+  }
+  .gold-border-gradient {
+    border-image: linear-gradient(to bottom, #ffd700, transparent) 1;
+  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #121414; }
+  ::-webkit-scrollbar-thumb { background: #333535; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #ffd700; }
+
+  /* Page sections */
+  .page-section { display: none; }
+  .page-section.active { display: block; }
+
+  /* Mobile menu */
+  #mobile-menu { display: none; }
+  #mobile-menu.open { display: flex; }
+
+  /* Nav active state */
+  .nav-link.active-nav {
+    color: #ffd700 !important;
+    border-bottom: 2px solid #ffd700;
+    padding-bottom: 4px;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ═══════════════════════════════════════════════
+     SHARED NAVIGATION BAR
+═══════════════════════════════════════════════ -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 bg-background border-b-2 border-outline-variant">
+  <div class="flex items-center gap-8">
+    <span class="font-display text-2xl md:text-display-lg font-black text-primary-container tracking-tighter cursor-pointer" onclick="navigate('training')">IRON LEGACY</span>
+    <nav class="hidden md:flex gap-6">
+      <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer" data-page="training" onclick="navigate('training')">Training</a>
+      <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer" data-page="schedule" onclick="navigate('schedule')">Schedule</a>
+      <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer" data-page="exercises" onclick="navigate('exercises')">Exercises</a>
+      <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer" data-page="nutrition" onclick="navigate('nutrition')">Nutrition</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="bg-primary-container text-on-primary px-md py-sm font-label-md uppercase font-bold tactile-btn transition-all hover:bg-primary-fixed rounded-none">
+      Start Workout
+    </button>
+    <button class="md:hidden text-on-surface" onclick="toggleMobileMenu()">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed top-20 w-full z-40 bg-background border-b-2 border-outline-variant flex-col px-margin-mobile py-md gap-sm">
+  <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container py-sm border-b border-outline-variant cursor-pointer" data-page="training" onclick="navigate('training'); toggleMobileMenu()">Training</a>
+  <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container py-sm border-b border-outline-variant cursor-pointer" data-page="schedule" onclick="navigate('schedule'); toggleMobileMenu()">Schedule</a>
+  <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container py-sm border-b border-outline-variant cursor-pointer" data-page="exercises" onclick="navigate('exercises'); toggleMobileMenu()">Exercises</a>
+  <a class="nav-link font-label-md text-label-md uppercase text-on-surface-variant hover:text-primary-container py-sm cursor-pointer" data-page="nutrition" onclick="navigate('nutrition'); toggleMobileMenu()">Nutrition</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 1: TRAINING (Home / Landing)
+     Source: downloadfile(4)
+═══════════════════════════════════════════════ -->
+<div id="page-training" class="page-section active">
+  <main class="pt-20">
+    <!-- Hero Section -->
+    <section class="relative min-h-[921px] flex items-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-l from-background via-background/80 to-transparent z-10"></div>
+        <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYw4vBVm0PsD7FUBQOi0DWopcpC3k9qDbMBaKfxW_zzZdAxFM9_koxDswECXU77Z3wxqi_0ERb916j_SnfY1KVoR_3rZSrR2oLmf2NtvwPXwq1Ynr9sxtVGd0BYdtZSRV1EZWkvCT2xOuIuaZWs3l_H-61Xs32e0M6U0-MVFjrA55UfJPQDx_orfPCTw_UAT_jRF6nExi-uczch-BemO8d9evNgdfE_ypxYhGfdp6u2BzrHBcWyxTi5gFZKkhywSMbY-LwXPm2Xr4')"></div>
+      </div>
+      <div class="container mx-auto px-6 md:px-margin-desktop relative z-20">
+        <div class="max-w-3xl">
+          <h1 class="font-display text-5xl md:text-[80px] mb-6 leading-tight font-black">
+            أرنولد سبليت:<br/>
+            <span class="gold-gradient-text">إرث الأساطير</span>
+          </h1>
+          <p class="font-body-lg text-on-surface-variant mb-10 max-w-xl">
+            اختبر البرنامج التدريبي الذي بنى أعظم الأجسام في التاريخ. نظام الـ 6 أيام عالي الكثافة المصمم لتفجير العضلات وتحقيق التناسق المثالي بين القوة والجمال.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="bg-primary-container text-on-primary px-10 py-4 font-headline-md uppercase tactile-button flex items-center justify-center gap-2" onclick="navigate('schedule')">
+              ابدأ تمرينك الآن
+              <span class="material-symbols-outlined">fitness_center</span>
+            </button>
+            <button class="border-2 border-on-surface text-on-surface px-10 py-4 font-headline-md uppercase tactile-button" onclick="navigate('schedule')">
+              اكتشف الجدول
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section (Philosophy) -->
+    <section class="py-xl bg-surface">
+      <div class="container mx-auto px-6 md:px-margin-desktop">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg items-center">
+          <div class="relative">
+            <div class="absolute -top-4 -right-4 w-32 h-32 border-t-4 border-r-4 border-primary-container"></div>
+            <div class="aspect-[4/5] bg-cover bg-center iron-border" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBJrvXUjWwYLM4AsuudGmJXqbPYrEXy6flPOo9sw_LwwM4BiY45IulSLASTEU5vlFuc-9pzWSZE97Z6F_kHnPWKzz6hwGlNcsvODHW7CP69IXvZIhKgMx-TIr6HRWEOVNwJ6eNTDzGs6YrlXaI5ONurSL9rN-r-ZF3_urcV2oMbtaYm6fW7bUtMaN4UOVNZBvLy1EcsIAJWimYDRMxXV7lsXGVjnsW-WOjntYMLbyDAQuGTW41mGYxIDh0jgX-G5vBH_gENv4BfpBw')"></div>
+          </div>
+          <div class="space-y-6">
+            <h2 class="font-display text-primary-container text-4xl font-black">فلسفة الأرنولد سبليت</h2>
+            <p class="font-body-lg leading-relaxed">
+              يعتمد هذا النظام على مبدأ <span class="text-primary-container font-bold underline">المجموعات العضلية المتضادة</span> (Antagonistic Groups). بدلاً من تدريب عضلة واحدة، نقوم بدمج الصدر مع الظهر، والأكتاف مع الأذرع.
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-start gap-4 gold-accent-left pr-4">
+                <div>
+                  <h4 class="font-headline-md text-on-surface">ضخ دم هائل (PUMP)</h4>
+                  <p class="text-on-surface-variant">تبادل التمارين بين عضلات الصدر والظهر يؤدي لتدفق الدم المستمر في الجزء العلوي بالكامل.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4 gold-accent-left pr-4">
+                <div>
+                  <h4 class="font-headline-md text-on-surface">تعافي أسرع</h4>
+                  <p class="text-on-surface-variant">يتيح هذا التقسيم وقتاً كافياً لكل مجموعة عضلية للنمو مع الحفاظ على وتيرة عالية.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features (Bento Grid) -->
+    <section class="py-xl bg-surface-container-lowest">
+      <div class="container mx-auto px-6 md:px-margin-desktop">
+        <div class="text-center mb-16">
+          <h2 class="font-display text-on-surface mb-4 text-4xl font-black">لماذا تختار "إرث الحديد"؟</h2>
+          <div class="w-24 h-1 bg-primary-container mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 bg-surface-container p-8 iron-border group hover:border-primary-container transition-all">
+            <span class="material-symbols-outlined text-primary-container text-4xl mb-4 block">update</span>
+            <h3 class="font-headline-lg mb-4 uppercase">تكرار العضلات 2x</h3>
+            <p class="font-body-lg text-on-surface-variant mb-6">
+              على عكس جداول الـ Bro-Split، هنا تمرن كل عضلة مرتين أسبوعياً. هذا هو المفتاح الذهبي لتحفيز تخليق البروتين العضلي بشكل مستمر وضمان عدم التوقف عن النمو.
+            </p>
+            <div class="h-48 w-full bg-cover bg-center opacity-50 grayscale group-hover:grayscale-0 transition-all" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQY0J150fBHSBtv-FpEtprbheirmkEioOoInUPrLkQ4-9GCKF_2cWFPlzvYg8omsigJXAACRpYOl59MjUNz9KkMzCKZKYxzWm99uxAQY6rL7u5X9tNZpugR80-xBB0IpnlLbizA8vh58WZw6FSFega4wP8rx5dYdb2ZIRB4WL6DH1kLb6oYrCOzcCR-_OoeuNfKRml99R7F2c-u-P1mfT-CgBGvbsElr1QSBLgKpAG-tUvTp2Stt6ogaZ-nxlEIixsx-9I62h4nfI')"></div>
+          </div>
+          <div class="bg-surface-container p-8 iron-border flex flex-col justify-between border-r-4 border-primary-container">
+            <div>
+              <span class="material-symbols-outlined text-primary-container text-4xl mb-4 block">military_tech</span>
+              <h3 class="font-headline-lg mb-4">إلهام العصر الذهبي</h3>
+              <p class="font-body-lg text-on-surface-variant">عدنا إلى الجذور. التمارين التي صمدت أمام اختبار الزمن، تم تحديثها بالعلم الرياضي المعاصر.</p>
+            </div>
+            <div class="mt-8 p-4 bg-background text-primary-container font-mono text-center border border-primary-container/20">
+              PURE PERFORMANCE
+            </div>
+          </div>
+          <div class="bg-surface-container p-8 iron-border flex items-center gap-6">
+            <div class="w-16 h-16 rounded-full border-2 border-primary-container flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-primary-container text-2xl">bolt</span>
+            </div>
+            <div>
+              <h3 class="font-headline-md">تركيز الضخامة</h3>
+              <p class="text-label-md text-on-surface-variant uppercase">Hypertrophy Masterclass</p>
+            </div>
+          </div>
+          <div class="md:col-span-2 bg-surface-container p-8 iron-border flex items-center justify-between overflow-hidden relative">
+            <div class="z-10">
+              <h3 class="font-headline-lg mb-2">انضم إلى النخبة</h3>
+              <p class="font-body-lg text-on-surface-variant">أكثر من 50,000 رياضي حول العالم يتبعون هذا المسار.</p>
+            </div>
+            <div class="flex -space-x-4 space-x-reverse z-10">
+              <div class="w-12 h-12 rounded-full border-2 border-background bg-zinc-800"></div>
+              <div class="w-12 h-12 rounded-full border-2 border-background bg-zinc-700"></div>
+              <div class="w-12 h-12 rounded-full border-2 border-background bg-zinc-600"></div>
+              <div class="w-12 h-12 rounded-full border-2 border-background bg-primary-container flex items-center justify-center text-on-primary font-bold text-xs">+50k</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-xl relative overflow-hidden">
+      <div class="absolute inset-0 bg-primary-container/5 pointer-events-none"></div>
+      <div class="container mx-auto px-6 text-center relative z-10">
+        <h2 class="font-display text-4xl md:text-6xl mb-8 font-black">هل أنت مستعد لمواجهة الحديد؟</h2>
+        <p class="font-body-lg text-on-surface-variant mb-12 max-w-2xl mx-auto">
+          لا توجد طرق مختصرة. فقط الجهد، الانضباط، والبرنامج الصحيح. ابدأ رحلتك نحو جسد الأساطير اليوم.
+        </p>
+        <div class="inline-block p-1 bg-primary-container">
+          <button class="bg-background text-primary-container hover:bg-primary-container hover:text-on-primary px-12 py-5 font-headline-lg uppercase transition-all tactile-button" onclick="navigate('schedule')">
+            احصل على البرنامج الآن
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 2: SCHEDULE (الجدول الأسبوعي)
+     Source: downloadfile(7)
+═══════════════════════════════════════════════ -->
+<div id="page-schedule" class="page-section">
+  <main class="pt-32 pb-xl px-margin-mobile md:px-margin-desktop min-h-screen">
+    <!-- Header -->
+    <header class="mb-lg space-y-sm">
+      <div class="flex items-center gap-sm">
+        <div class="w-1.5 h-8 bg-primary-container"></div>
+        <h1 class="font-headline-lg text-headline-lg md:text-display-lg uppercase tracking-tight">الجدول الأسبوعي</h1>
+      </div>
+      <p class="text-on-surface-variant font-body-lg max-w-2xl">نظام "أرنولد سبريت" الكلاسيكي: تركيز مكثف على العضلات المتقابلة لتحقيق أقصى درجات الضخامة العضلية والقوة المتفجرة.</p>
+    </header>
+
+    <!-- Status Mini-Tracker -->
+    <div class="mb-lg grid grid-cols-2 md:grid-cols-4 gap-md">
+      <div class="bg-surface-container border border-outline-variant p-md">
+        <p class="text-label-md font-label-md text-primary-container uppercase mb-xs">اليوم الحالي</p>
+        <p class="text-headline-md font-headline-md">الاثنين - اليوم 1</p>
+      </div>
+      <div class="bg-surface-container border border-outline-variant p-md">
+        <p class="text-label-md font-label-md text-primary-container uppercase mb-xs">الهدف الأسبوعي</p>
+        <p class="text-headline-md font-headline-md">6 / 6 حصص</p>
+      </div>
+      <div class="bg-surface-container border border-outline-variant p-md">
+        <p class="text-label-md font-label-md text-primary-container uppercase mb-xs">إجمالي الوزن</p>
+        <p class="text-headline-md font-headline-md">12,450 كجم</p>
+      </div>
+      <div class="bg-surface-container border border-outline-variant p-md">
+        <p class="text-label-md font-label-md text-primary-container uppercase mb-xs">السعرات المتبقية</p>
+        <p class="text-headline-md font-headline-md">850 سعرة</p>
+      </div>
+    </div>
+
+    <!-- Weekly Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-7 gap-sm">
+      <!-- Day 1 -->
+      <div class="md:col-span-1 group">
+        <div class="bg-surface-container border-l-4 border-l-primary-container border-r border-t border-b border-outline-variant h-full p-md transition-all workout-card-hover cursor-pointer relative overflow-hidden" onclick="navigate('exercises')">
+          <div class="flex justify-between items-start mb-md">
+            <span class="text-label-md font-label-md text-primary-container">الاثنين - 01</span>
+            <span class="material-symbols-outlined text-on-surface-variant">fitness_center</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-sm uppercase">الصدر والظهر</h3>
+          <div class="space-y-xs mb-lg">
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">timer</span>
+              <span>90 دقيقة</span>
+            </div>
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">list</span>
+              <span>8 تمارين</span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 right-0 p-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-primary-container">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+      <!-- Day 2 -->
+      <div class="md:col-span-1 group">
+        <div class="bg-surface-container border border-outline-variant h-full p-md transition-all workout-card-hover cursor-pointer relative overflow-hidden" onclick="navigate('exercises')">
+          <div class="flex justify-between items-start mb-md">
+            <span class="text-label-md font-label-md text-on-surface-variant">الثلاثاء - 02</span>
+            <span class="material-symbols-outlined text-on-surface-variant">exercise</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-sm uppercase">الأكتاف والذراعين</h3>
+          <div class="space-y-xs mb-lg">
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">timer</span><span>75 دقيقة</span>
+            </div>
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">list</span><span>10 تمارين</span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 right-0 p-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-primary-container">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+      <!-- Day 3 -->
+      <div class="md:col-span-1 group">
+        <div class="bg-surface-container border border-outline-variant h-full p-md transition-all workout-card-hover cursor-pointer relative overflow-hidden" onclick="navigate('exercises')">
+          <div class="flex justify-between items-start mb-md">
+            <span class="text-label-md font-label-md text-on-surface-variant">الأربعاء - 03</span>
+            <span class="material-symbols-outlined text-on-surface-variant">directions_run</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-sm uppercase">الأرجل</h3>
+          <div class="space-y-xs mb-lg">
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">timer</span><span>100 دقيقة</span>
+            </div>
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">list</span><span>7 تمارين</span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 right-0 p-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-primary-container">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+      <!-- Day 4 -->
+      <div class="md:col-span-1 group">
+        <div class="bg-surface-container border border-outline-variant h-full p-md transition-all workout-card-hover cursor-pointer relative overflow-hidden" onclick="navigate('exercises')">
+          <div class="flex justify-between items-start mb-md">
+            <span class="text-label-md font-label-md text-on-surface-variant">الخميس - 04</span>
+            <span class="material-symbols-outlined text-on-surface-variant">fitness_center</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-sm uppercase">الصدر والظهر</h3>
+          <div class="space-y-xs mb-lg">
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">timer</span><span>90 دقيقة</span>
+            </div>
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">list</span><span>8 تمارين</span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 right-0 p-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-primary-container">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+      <!-- Day 5 -->
+      <div class="md:col-span-1 group">
+        <div class="bg-surface-container border border-outline-variant h-full p-md transition-all workout-card-hover cursor-pointer relative overflow-hidden" onclick="navigate('exercises')">
+          <div class="flex justify-between items-start mb-md">
+            <span class="text-label-md font-label-md text-on-surface-variant">الجمعة - 05</span>
+            <span class="material-symbols-outlined text-on-surface-variant">exercise</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-sm uppercase">الأكتاف والذراعين</h3>
+          <div class="space-y-xs mb-lg">
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">timer</span><span>75 دقيقة</span>
+            </div>
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">list</span><span>10 تمارين</span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 right-0 p-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-primary-container">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+      <!-- Day 6 -->
+      <div class="md:col-span-1 group">
+        <div class="bg-surface-container border border-outline-variant h-full p-md transition-all workout-card-hover cursor-pointer relative overflow-hidden" onclick="navigate('exercises')">
+          <div class="flex justify-between items-start mb-md">
+            <span class="text-label-md font-label-md text-on-surface-variant">السبت - 06</span>
+            <span class="material-symbols-outlined text-on-surface-variant">directions_run</span>
+          </div>
+          <h3 class="font-headline-md text-headline-md mb-sm uppercase">الأرجل</h3>
+          <div class="space-y-xs mb-lg">
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">timer</span><span>100 دقيقة</span>
+            </div>
+            <div class="flex items-center gap-xs text-on-surface-variant text-label-md uppercase">
+              <span class="material-symbols-outlined text-sm">list</span><span>7 تمارين</span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 right-0 p-md opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="material-symbols-outlined text-primary-container">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+      <!-- Day 7: Rest -->
+      <div class="md:col-span-1 group">
+        <div class="bg-surface-container-lowest border border-dashed border-outline-variant h-full p-md transition-all hover:bg-surface-container flex flex-col justify-center items-center text-center cursor-default">
+          <span class="material-symbols-outlined text-primary-container text-4xl mb-md">spa</span>
+          <span class="text-label-md font-label-md text-on-surface-variant uppercase mb-xs">الأحد - 07</span>
+          <h3 class="font-headline-md text-headline-md uppercase">راحة تامة</h3>
+          <p class="text-on-tertiary-container text-label-md mt-sm">استشفاء العضلات ضروري للنمو</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Exercise Breakdown -->
+    <section class="mt-xl">
+      <div class="flex items-center justify-between mb-lg">
+        <div class="flex items-center gap-sm">
+          <div class="w-1 h-6 bg-primary-container"></div>
+          <h2 class="font-headline-lg text-headline-lg uppercase">نظرة على تمارين اليوم</h2>
+        </div>
+        <button class="text-primary-container font-label-md text-label-md flex items-center gap-xs hover:underline" onclick="navigate('exercises')">
+          مشاهدة الخطة الكاملة
+          <span class="material-symbols-outlined text-sm">open_in_new</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+        <!-- Large Card: Main Compound -->
+        <div class="md:col-span-2 relative h-96 group overflow-hidden border border-outline-variant">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZMN0fxKfousv1inso6XNp3zXbwZbOVf_gf_TLZhd5eJhsE-tkwN_AsgsI4vRdt8K7GZ0_MtRyhwwiip6I42_8xQJ3mwrhZDJNJjprU6-21w4AxhT1En2IXU8JmrSxiThR1kzpx_N2eoLMGyZ3e1PQBxc7JPDBo8AFw6uuAA93F4KLE2l3ThkksjOUnYVohTU4-KSSlsqPAMOlER7-xQcuHHB-zr3XbPyq_2MHCXb3mFquQod41EtHofPuG-eWbSk8nU2f4pG-EJU')"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-90"></div>
+          <div class="absolute bottom-0 p-lg w-full">
+            <div class="bg-primary-container text-on-primary inline-block px-sm py-xs font-label-md text-label-md mb-sm">تمرين القوة الرئيسي</div>
+            <h3 class="font-display-lg text-display-lg mb-sm uppercase font-black">ضغط الصدر (بنچ برس)</h3>
+            <div class="flex gap-lg">
+              <div>
+                <p class="text-on-surface-variant font-label-md uppercase">الجولات</p>
+                <p class="font-stat-lg text-stat-lg">5</p>
+              </div>
+              <div>
+                <p class="text-on-surface-variant font-label-md uppercase">التكرارات</p>
+                <p class="font-stat-lg text-stat-lg">8-10</p>
+              </div>
+              <div>
+                <p class="text-on-surface-variant font-label-md uppercase">الراحة</p>
+                <p class="font-stat-lg text-stat-lg">120ث</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Small Cards Stack -->
+        <div class="space-y-md">
+          <div class="bg-surface-container border border-outline-variant p-md flex items-center gap-md">
+            <div class="w-20 h-20 bg-surface-container-high border border-outline-variant flex-shrink-0 relative">
+              <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCnMYh5HSjvVwsls9DpNs5-RjEf4Hj-7y6prGlYKym2zJtkpoUEX_fnRFNI6Zbg03LHx8ApPvsZyOoVkpufXNr8Z5Rspo6cShyzeHWlIx3IBNOMfDA06lDX85n0hKOsIw5GYaND5a-BdNmcmtGLTEAKUGZOd6wsJmyWFRVxTID9JmSxOnSf7JN9IMajUaA__aCWfqUyH7d9gOYFcZ3nn6C0NyYtpQy2fzLPWdAyeZ4HeF5BHqmV8vPu6o3nUEBTIretqrToRyhcKWc')"></div>
+            </div>
+            <div>
+              <h4 class="font-headline-md text-headline-md uppercase">سحب علوي للظهر</h4>
+              <p class="text-on-surface-variant text-label-md uppercase">4 جولات × 12 تكرار</p>
+            </div>
+          </div>
+          <div class="bg-surface-container border border-outline-variant p-md flex items-center gap-md">
+            <div class="w-20 h-20 bg-surface-container-high border border-outline-variant flex-shrink-0 relative">
+              <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvPLyN7DEniKpQ364eBq5ZCybZWUqo5YX8JGFPD7aQlzEexTF0ysRfE-B0CnqlZlLE7coBggfNOY3w5gIsGZTJinVrRYiZ9iT_3nOWcFng4lie-dDSklerD8fp0ROocaKoyWDOAaNrp4CaRgrodm9iZzYfRQZUSFxCu0Zv7JvVIYQVnoI--rtuTBVmXePqYW0nxwngQNXF3GLSdUe2xTjRB_D9HYj7RCQF4ZQislqVJG9YukT8Byja39kFj1qpaJOlxO6C7Ki7vdo')"></div>
+            </div>
+            <div>
+              <h4 class="font-headline-md text-headline-md uppercase">تفتيح صدر مائل</h4>
+              <p class="text-on-surface-variant text-label-md uppercase">3 جولات × 15 تكرار</p>
+            </div>
+          </div>
+          <div class="bg-surface-container border border-outline-variant p-md flex items-center gap-md">
+            <div class="w-20 h-20 bg-surface-container-high border border-outline-variant flex-shrink-0 relative">
+              <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBthHmzpcVC3vFxlWTlGJyxxOFS_qtYd9p3wK3RUHa7FfvHoibvLOOJ582CWdVHVxONZhE1Yr-uCavvOSUElp9A_66gANy3I5cucmCHEusTWlo2myLCFT-xvMfNz70XgZymFVNreBMyfyF73kN8BBAfZ069NiEReLuvNRVfjQi1cltdTTy1CwwBIYQC_Yqs0iv6Ugm5ebcOxX1tG0JXghJz5-PwZIcxNcMldAuAwEhZRC8ViDwZJHhS2qOZAD6FpHEI7k5iK7KzrsI')"></div>
+            </div>
+            <div>
+              <h4 class="font-headline-md text-headline-md uppercase">تجديف بار منحني</h4>
+              <p class="text-on-surface-variant text-label-md uppercase">4 جولات × 10 تكرار</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Action Button -->
+  <div class="fixed bottom-margin-mobile left-margin-mobile z-50">
+    <button class="bg-primary-container text-on-primary-container w-16 h-16 flex items-center justify-center shadow-2xl transition-transform hover:scale-110 active:scale-95 group">
+      <span class="material-symbols-outlined text-3xl font-bold group-hover:rotate-12 transition-transform">bolt</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 3: EXERCISES (قائمة التمارين)
+     Source: downloadfile(6)
+═══════════════════════════════════════════════ -->
+<div id="page-exercises" class="page-section">
+  <main class="pt-32 pb-xl px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+    <!-- Hero / Title -->
+    <div class="mb-lg border-r-4 border-primary-container pr-md">
+      <h1 class="font-display text-5xl font-black uppercase tracking-tight text-white mb-base">قائمة التمارين الشاملة</h1>
+      <p class="text-on-surface-variant text-lg font-body-lg max-w-2xl">الدليل الكامل لتمارين العصر الذهبي. القوة، الانضباط، والنتائج الاستثنائية.</p>
+    </div>
+
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-md">
+      <!-- Chest (Large) -->
+      <section class="md:col-span-8 bg-surface-container iron-border p-md">
+        <div class="flex items-center justify-between mb-md">
+          <h2 class="font-display text-3xl font-black uppercase flex items-center gap-sm">
+            <span class="material-symbols-outlined text-primary-container">fitness_center</span>
+            عضلات الصدر (Chest)
+          </h2>
+          <span class="bg-primary-container text-background px-sm py-1 font-bold text-xs uppercase">High Intensity</span>
+        </div>
+        <div class="grid grid-cols-1 gap-md">
+          <div class="flex flex-col md:flex-row gap-md p-md bg-surface-container-low iron-border active-exercise-border">
+            <div class="w-full md:w-48 h-32 flex-shrink-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBQ0a7aLu5x7v001tlcCHl71m1Ul6On2m5Vb4etlJcrAfrTZRwUL8Nd5e5xAMPBPJ0e_9X52btwMcHwpoqS88VP7yrmXc1ctl5V6Rb2EtA9bmXCGJd_TiyKkdSVEsYw7bHKc5VteVcUmqklwsSghWXa5ihsXlweeZwWVuQh7_SAgq8fNn9nL1z5eYL95JZuidIWXcVT_xJzACAd1d9bO63jHhVxlpUIn4nBWk12IGfRB_L4Add7Pnjavizt2Sp2ocrEYfb1uhNCJwA')"></div>
+            <div class="flex-grow">
+              <h3 class="font-display text-xl font-bold uppercase text-white">Incline DB Press | تجميع ضغط عالي</h3>
+              <p class="text-on-surface-variant text-sm mb-base">يستهدف الجزء العلوي من الصدر لبناء سماكة وقوة.</p>
+              <div class="flex gap-sm flex-wrap">
+                <span class="text-primary-container font-label-md text-xs border border-primary-container px-2 py-1">3 مجموعات × 10-12 تكرار</span>
+                <span class="text-on-surface-variant font-label-md text-xs border border-outline px-2 py-1">راحة: 90 ثانية</span>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+            <div class="p-md bg-surface-container-low iron-border">
+              <h3 class="font-display text-lg font-bold uppercase text-white mb-xs">Bench Press | بنش برس</h3>
+              <p class="text-on-surface-variant text-xs mb-sm italic">التمرين الأساسي لبناء القوة القصوى.</p>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-primary-container font-bold uppercase">3 مجموعات × 8 تكرار</span>
+                <span class="text-on-surface-variant">Standard Flat</span>
+              </div>
+            </div>
+            <div class="p-md bg-surface-container-low iron-border">
+              <h3 class="font-display text-lg font-bold uppercase text-white mb-xs">Chest Fly | تفتيح صدر</h3>
+              <p class="text-on-surface-variant text-xs mb-sm italic">تركيز كامل على تمدد وانقباض العضلة.</p>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-primary-container font-bold uppercase">3 مجموعات × 15 تكرار</span>
+                <span class="text-on-surface-variant">Cable or Dumbbell</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shoulders (Small) -->
+      <section class="md:col-span-4 bg-surface-container-high iron-border p-md flex flex-col">
+        <h2 class="font-display text-2xl font-black uppercase mb-md flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary-container">shield</span>
+          الأكتاف (Shoulders)
+        </h2>
+        <div class="space-y-sm flex-grow">
+          <div class="p-sm border-r-2 border-primary-container bg-background">
+            <p class="font-bold text-white uppercase text-sm">Shoulder Press | ضغط أكتاف</p>
+            <p class="text-xs text-primary-container">3 مجموعات × 10 تكرار</p>
+          </div>
+          <div class="p-sm border-r-2 border-outline bg-background">
+            <p class="font-bold text-white uppercase text-sm">Lateral Raise | رفرفة جانبي</p>
+            <p class="text-xs text-on-surface-variant">3 مجموعات × 15 تكرار</p>
+          </div>
+          <div class="p-sm border-r-2 border-outline bg-background">
+            <p class="font-bold text-white uppercase text-sm">Face Pull | سحب وجه</p>
+            <p class="text-xs text-on-surface-variant">3 مجموعات × 12 تكرار</p>
+          </div>
+        </div>
+        <div class="mt-md h-40 w-full bg-cover bg-center iron-border" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdEYghlyuwU57LEJfLHDejdwuPSDOF7xEVlBJ-BORXjFaPn6ETy3eyQG5UdUxMlKNlEm7KB-vewKv-khputRYOr2dsgiMOyCj-D-BsXdxlh6vcd9quP-Ixmq5gTDSFuw3_zUPc250L3AjpNJvXvLueSn1RldMuFiFg2YeH98u_YikGy4Xwq6Fe2yx_wJ6MzM52QMAl-WWnOBcvmrDtMh6UCNPhDfUkj5fJSBK4so3V_l3n0VGK6pmbOlLEmeoZQ6-wzh4SppeXmKY')"></div>
+      </section>
+
+      <!-- Back (Wide) -->
+      <section class="md:col-span-12 bg-surface-container iron-border p-md">
+        <div class="flex items-center gap-md mb-md">
+          <h2 class="font-display text-3xl font-black uppercase">عضلات الظهر (Back)</h2>
+          <div class="h-[2px] flex-grow bg-outline-variant"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+          <div class="relative group overflow-hidden iron-border bg-background aspect-square">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOnIcIqaz27VP6H3_I2Nv0fzYJKiPt-o_CRnE-8L5hL0l_eQvVrWorxXwrElL-C32UahLXo1BF82MurzKZJxoiGdMdVNIOqIznqHMVJJvA2Nms5vnJsBCh82CJTDa5eHwJxR3-MWGa5_smSlMNODON9JNcpbgfEnlDWgg0q6Y8fkZZJOkHEQJ86FomZirCR7LoHKi7TcCHb7a8cKjvJjqpZP27SgSX4CQi_dFko8DHo8fpGAneYRfPXgXlvZf5awgEYd0eFBtFqwc')"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-0 p-md w-full">
+              <span class="text-xs font-bold text-primary-container uppercase mb-1 block">Upper Back Width</span>
+              <h3 class="font-display text-xl font-black text-white uppercase">Lat Pulldown | سحب عالي</h3>
+              <p class="text-xs text-on-surface-variant mb-base">3 مجموعات × 12 تكرار</p>
+            </div>
+          </div>
+          <div class="p-md bg-surface-container-low iron-border flex flex-col justify-between">
+            <div>
+              <h3 class="font-display text-lg font-bold uppercase text-white mb-sm">Seated Row | سحب جالساً</h3>
+              <p class="text-on-surface-variant text-sm italic">لتركيز الكثافة في منتصف الظهر.</p>
+            </div>
+            <div class="mt-lg">
+              <div class="flex items-baseline gap-base">
+                <span class="font-display text-4xl text-primary-container">03</span>
+                <span class="text-xs uppercase font-bold text-on-surface-variant">Sets</span>
+              </div>
+              <div class="flex items-baseline gap-base mt-base">
+                <span class="font-display text-4xl text-white">10</span>
+                <span class="text-xs uppercase font-bold text-on-surface-variant">Reps</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-md bg-surface-container-low iron-border flex flex-col justify-between border-l-4 border-primary-container">
+            <div>
+              <h3 class="font-display text-lg font-bold uppercase text-white mb-sm">T-Bar Row | سحب تي-بار</h3>
+              <p class="text-on-surface-variant text-sm italic">تمرين العمالقة لبناء سماكة الظهر.</p>
+            </div>
+            <div class="mt-lg flex flex-col gap-sm">
+              <button class="w-full py-sm bg-primary-container text-background font-black uppercase text-sm">سجل مجموعتك الأولى</button>
+              <span class="text-[10px] uppercase tracking-widest text-center text-on-surface-variant">Required for hypertrophy</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Legs -->
+      <section class="md:col-span-7 bg-surface-container iron-border p-md">
+        <h2 class="font-display text-2xl font-black uppercase mb-md">الأرجل (Legs)</h2>
+        <div class="grid grid-cols-2 gap-sm">
+          <div class="glass-panel p-sm">
+            <p class="font-bold uppercase text-white text-sm">Leg Extension | تمديد أرجل</p>
+            <p class="text-xs text-primary-container">3 مجموعات × 20 تكرار</p>
+          </div>
+          <div class="glass-panel p-sm">
+            <p class="font-bold uppercase text-white text-sm">Leg Press | دفع أرجل</p>
+            <p class="text-xs text-primary-container">3 مجموعات × 12 تكرار</p>
+          </div>
+          <div class="glass-panel p-sm">
+            <p class="font-bold uppercase text-white text-sm">Leg Curl | طحن أرجل</p>
+            <p class="text-xs text-primary-container">3 مجموعات × 15 تكرار</p>
+          </div>
+          <div class="glass-panel p-sm">
+            <p class="font-bold uppercase text-white text-sm">Calf Raises | تمارين السمانة</p>
+            <p class="text-xs text-primary-container">3 مجموعات × 25 تكرار</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Arms -->
+      <section class="md:col-span-5 bg-surface-container iron-border p-md relative overflow-hidden">
+        <div class="relative z-10">
+          <h2 class="font-display text-2xl font-black uppercase mb-md">الذراعين (Arms)</h2>
+          <ul class="space-y-md">
+            <li class="flex items-center gap-md">
+              <span class="w-2 h-2 bg-primary-container flex-shrink-0"></span>
+              <div class="flex-grow">
+                <p class="font-bold uppercase text-white">Bicep Curls | تبادل بايسبس</p>
+                <p class="text-xs text-on-surface-variant">3 مجموعات × 12 تكرار</p>
+              </div>
+            </li>
+            <li class="flex items-center gap-md">
+              <span class="w-2 h-2 bg-primary-container flex-shrink-0"></span>
+              <div class="flex-grow">
+                <p class="font-bold uppercase text-white">Preacher Curls | تمرين بريتشر</p>
+                <p class="text-xs text-on-surface-variant">3 مجموعات × 10 تكرار</p>
+              </div>
+            </li>
+            <li class="flex items-center gap-md">
+              <span class="w-2 h-2 bg-primary-container flex-shrink-0"></span>
+              <div class="flex-grow">
+                <p class="font-bold uppercase text-white">Triceps Pushdown | ترايسبس كيبل</p>
+                <p class="text-xs text-on-surface-variant">3 مجموعات × 15 تكرار</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 4: NUTRITION (التغذية والأداء)
+     Source: downloadfile(5)
+═══════════════════════════════════════════════ -->
+<div id="page-nutrition" class="page-section">
+  <main class="pt-32 pb-xl px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+    <!-- Hero -->
+    <header class="mb-xl text-center md:text-right relative">
+      <div class="absolute -top-10 -right-10 opacity-10 pointer-events-none">
+        <span class="material-symbols-outlined text-[200px] text-primary-container">fitness_center</span>
+      </div>
+      <div class="inline-block bg-primary-container text-on-primary px-sm py-xs font-label-md uppercase mb-base">المستوى: متوسط</div>
+      <h1 class="font-display-lg text-display-lg md:text-[64px] text-primary-container uppercase leading-tight mb-md font-black">نصائح الأداء والتغذية الاحترافية</h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl md:mr-0 md:ml-auto">
+        هذا الدليل مخصص للاعبين الذين تجاوزوا مرحلة البداية (6-12 شهراً من التدريب المستمر) ويسعون للانتقال إلى مستوى النخبة من خلال تحسين التفاصيل الدقيقة.
+      </p>
+    </header>
+
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-md">
+      <!-- Form & Consistency -->
+      <section class="md:col-span-8 bg-surface-container border border-outline-variant p-md md:p-lg relative overflow-hidden group">
+        <div class="absolute left-0 top-0 w-2 h-full bg-primary-container"></div>
+        <div class="flex flex-col md:flex-row gap-md items-start">
+          <div class="flex-1">
+            <div class="flex items-center gap-sm mb-sm text-primary-container">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+              <h2 class="font-headline-lg text-headline-lg uppercase">إتقان الأداء والاستمرارية</h2>
+            </div>
+            <p class="font-body-md text-on-surface mb-md">
+              في هذه المرحلة، لم يعد الوزن هو المقياس الوحيد. الجودة هي المحرك الأساسي لنمو العضلات. ركز على التوتر العضلي تحت الضغط (Time Under Tension) والمدى الحركي الكامل.
+            </p>
+            <ul class="space-y-sm">
+              <li class="flex items-center gap-sm text-on-surface-variant">
+                <span class="material-symbols-outlined text-primary-container text-base">check_circle</span>
+                <span>التحكم في الوزن أثناء النزول (Phase Eccentric).</span>
+              </li>
+              <li class="flex items-center gap-sm text-on-surface-variant">
+                <span class="material-symbols-outlined text-primary-container text-base">check_circle</span>
+                <span>ثبات الجذع في التمارين المركبة مثل Squats و Deadlifts.</span>
+              </li>
+              <li class="flex items-center gap-sm text-on-surface-variant">
+                <span class="material-symbols-outlined text-primary-container text-base">check_circle</span>
+                <span>التنفس الصحيح لضمان أقصى قدر من الأكسجين للعضلات.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="w-full md:w-64 h-64 bg-surface-container-high border border-outline flex items-center justify-center relative">
+            <img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5gLfl2-L1zrBHjzTkMZNcNvYV9BRfmIHWyonLCYjdkE5BjWgAo0lQD1r0S6ZKgwKVgxKlkSxv5C5YMXqobuf5wFB4QZz-GUG1xstqXeMbIjoknz2Eh5oAcZtWwr6ykZPpjiGyNSd3nkNw1pxJsg5b45xwaGQeW1LtyZvqVKUC23-enYQxpbT2gQPTrSt7dAhOIj7ngW8T_VwuukLmPD5yBywYGDxnlY2W7PF9P8jAN3ZPj8ZMWEhN_Bn-xGuGy2kV9wTC88yYaAs" alt=""/>
+            <div class="absolute bottom-0 right-0 p-sm bg-background/80 backdrop-blur-sm text-primary-container font-label-md">FORGED IN IRON</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Consistency Stat -->
+      <aside class="md:col-span-4 bg-primary-container text-on-primary-container p-md flex flex-col justify-center items-center text-center border-2 border-primary-container group hover:bg-primary-fixed transition-colors">
+        <span class="font-stat-lg text-[80px] leading-none mb-sm">90%</span>
+        <p class="font-headline-md uppercase">معدل الاستمرارية المطلوب</p>
+        <div class="w-16 h-1 bg-on-primary-container my-md"></div>
+        <p class="font-body-md">النتائج لا تأتي من التدريب القاسي لمرة واحدة، بل من الالتزام اليومي.</p>
+      </aside>
+
+      <!-- Nutrition: Bulking vs Cutting -->
+      <section class="md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-md">
+        <!-- Bulking -->
+        <div class="bg-surface-container-low border border-outline-variant p-md hover:border-primary-container transition-all">
+          <div class="flex items-center justify-between mb-md">
+            <h3 class="font-headline-lg text-headline-lg text-primary-container uppercase">تضخيم (Bulking)</h3>
+            <span class="material-symbols-outlined text-4xl">restaurant</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant mb-md">
+            لتحقيق أقصى استفادة، ركز على فائض سعرات حرارية مدروس (250-500 سعرة إضافية). البروتين يجب أن يكون بين 1.6 إلى 2.2 جرام لكل كيلوجرام من وزن الجسم.
+          </p>
+          <div class="p-sm bg-surface-container-highest border-r-4 border-primary-container">
+            <span class="font-label-md text-primary-container block mb-xs uppercase">نصيحة ذهبية:</span>
+            <span class="text-on-surface">الكربوهيدرات هي وقودك الأساسي لزيادة القوة في النادي.</span>
+          </div>
+        </div>
+        <!-- Cutting -->
+        <div class="bg-surface-container-low border border-outline-variant p-md hover:border-primary-container transition-all">
+          <div class="flex items-center justify-between mb-md">
+            <h3 class="font-headline-lg text-headline-lg text-on-surface uppercase">تنشيف (Cutting)</h3>
+            <span class="material-symbols-outlined text-4xl">flatware</span>
+          </div>
+          <p class="font-body-md text-on-surface-variant mb-md">
+            الهدف هو الحفاظ على الكتلة العضلية مع فقدان الدهون. ابقِ البروتين مرتفعاً، وقلل الكربوهيدرات تدريجياً. حافظ على شدة التمرين عالية كما هي.
+          </p>
+          <div class="p-sm bg-surface-container-highest border-r-4 border-on-surface">
+            <span class="font-label-md text-on-surface block mb-xs uppercase">تنبيه:</span>
+            <span class="text-on-surface-variant">لا تقلل السعرات بشكل مفاجئ لتجنب فقدان العضلات والارهاق الشديد.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Abs Section -->
+      <section class="md:col-span-12 bg-surface border-2 border-primary-container/20 p-md md:p-lg relative overflow-hidden">
+        <div class="relative z-10">
+          <h2 class="font-headline-lg text-headline-lg text-primary-container uppercase mb-md text-center">تمارين البطن: متى وكيف؟</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+            <div class="text-center p-base bg-surface-container-high/50 backdrop-blur-md border border-outline-variant">
+              <span class="material-symbols-outlined text-primary-container text-4xl mb-sm block">timer</span>
+              <h4 class="font-headline-md mb-xs">التوقيت</h4>
+              <p class="font-body-md text-on-surface-variant">في نهاية الحصة التدريبية لتجنب إجهاد الجذع قبل التمارين الثقيلة.</p>
+            </div>
+            <div class="text-center p-base bg-surface-container-high/50 backdrop-blur-md border border-outline-variant">
+              <span class="material-symbols-outlined text-primary-container text-4xl mb-sm block">layers</span>
+              <h4 class="font-headline-md mb-xs">التنوع</h4>
+              <p class="font-body-md text-on-surface-variant">ادمج بين تمارين الانقباض (Crunches) وتمارين الثبات (Planks).</p>
+            </div>
+            <div class="text-center p-base bg-surface-container-high/50 backdrop-blur-md border border-outline-variant">
+              <span class="material-symbols-outlined text-primary-container text-4xl mb-sm block">reorder</span>
+              <h4 class="font-headline-md mb-xs">التكرار</h4>
+              <p class="font-body-md text-on-surface-variant">2-3 مرات أسبوعياً كافية جداً، العضلة تحتاج للاستشفاء مثل أي عضلة أخرى.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SHARED FOOTER
+═══════════════════════════════════════════════ -->
+<footer class="w-full py-lg px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md border-t-2 border-outline-variant bg-surface-container-lowest">
+  <div class="flex flex-col items-center md:items-start gap-2">
+    <span class="font-headline-md text-headline-md font-black text-on-surface uppercase">IRON LEGACY</span>
+    <p class="font-label-md text-label-md uppercase text-on-tertiary-container">
+      © 2024 IRON LEGACY. FORGED IN THE GOLDEN ERA.
+    </p>
+  </div>
+  <nav class="flex flex-wrap justify-center gap-6">
+    <a class="font-label-md text-label-md uppercase text-on-tertiary-container hover:text-primary-container transition-colors cursor-pointer" onclick="navigate('training')">Training</a>
+    <a class="font-label-md text-label-md uppercase text-on-tertiary-container hover:text-primary-container transition-colors cursor-pointer" onclick="navigate('schedule')">Schedule</a>
+    <a class="font-label-md text-label-md uppercase text-on-tertiary-container hover:text-primary-container transition-colors cursor-pointer" onclick="navigate('exercises')">Exercises</a>
+    <a class="font-label-md text-label-md uppercase text-on-tertiary-container hover:text-primary-container transition-colors cursor-pointer" onclick="navigate('nutrition')">Nutrition</a>
+  </nav>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script>
+  function navigate(page) {
+    // Hide all sections
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    // Show target
+    const target = document.getElementById('page-' + page);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Update nav active states
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.classList.remove('active-nav');
+      if (link.dataset.page === page) link.classList.add('active-nav');
+    });
+  }
+
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open');
+  }
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('mobile-menu');
+    const btn = e.target.closest('[onclick="toggleMobileMenu()"]');
+    if (!btn && !menu.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  });
+
+  // Tactile feedback for all buttons
+  document.addEventListener('mousedown', function(e) {
+    const btn = e.target.closest('.tactile-btn, .tactile-button');
+    if (btn) btn.style.transform = 'translateY(2px)';
+  });
+  document.addEventListener('mouseup', function(e) {
+    const btn = e.target.closest('.tactile-btn, .tactile-button');
+    if (btn) btn.style.transform = '';
+  });
+
+  // Intersection Observer for fade-in
+  const observerOpts = { threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+        entry.target.classList.remove('opacity-0', 'translate-y-4');
+      }
+    });
+  }, observerOpts);
+
+  document.querySelectorAll('section > div, section > header').forEach(el => {
+    el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+    observer.observe(el);
+  });
+
+  // Workout card icon fill on hover
+  document.querySelectorAll('.workout-card-hover').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const icon = card.querySelector('.material-symbols-outlined');
+      if (icon) icon.style.fontVariationSettings = "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+    });
+    card.addEventListener('mouseleave', () => {
+      const icon = card.querySelector('.material-symbols-outlined');
+      if (icon) icon.style.fontVariationSettings = "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+    });
+  });
+
+  // Set initial active nav
+  navigate('training');
+</script>
+</body>
+</html>
